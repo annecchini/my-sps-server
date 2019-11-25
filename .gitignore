@@ -61,7 +61,7 @@ typings/
 .next
 
 # project manual ignore
-app/config/database.json
-app/config/site.json
-app/config/secrets.json
+app/config/database.js
+app/config/site.js
+app/config/secrets.js
 .vscode
