@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/annecchini/my-sps-server#readme",
   "dependencies": {
+    "consign": "^0.1.6",
     "express": "^4.17.1",
+    "helmet": "^3.21.2",
     "mysql2": "^2.0.1",
     "sequelize": "^5.21.2"
   },

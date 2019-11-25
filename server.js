@@ -1,11 +1,12 @@
-const express = require('express')
+var express = require('express')
+var consign = require('consign')
 
 const app = express()
 
-app.use(express.urlencoded({ extended: false }))
-
-app.get('/', (req, res) => {
-  res.send('Server running!')
-})
-
-app.listen(3000)
+consign({ cwd: 'app' })
+  .include('config')
+  .then('libs/express-middlewares.js')
+  .then('db/models/index.js')
+  .then('routes')
+  .then('libs/boot.js')
+  .into(app)
