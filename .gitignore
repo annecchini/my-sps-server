@@ -61,6 +61,7 @@ typings/
 .next
 
 # project manual ignore
-config/database.json
-config/secrets.json
+app/config/database.json
+app/config/site.json
+app/config/secrets.json
 .vscode
