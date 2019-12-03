@@ -61,7 +61,9 @@ typings/
 .next
 
 # project manual ignore
-app/config/database.js
-app/config/site.js
-app/config/secrets.js
+config/database.js
+config/site.js
+config/secrets.js
+config/routeList.js
+
 .vscode

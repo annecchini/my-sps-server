@@ -1,11 +1,13 @@
 module.exports = app => {
   const api = app.api.graduationType
+  const route = require('../../config/routeList').graduationType
+
   app
-    .route('/v1/graduationType')
+    .route(route)
     //.post(authApi.authenticationRequired, authApi.adminRequired, api.create)
     .get(api.list)
 
-  app.route('/v1/graduationType/:id').get(api.specific)
+  app.route(`${route}/:id`).get(api.specific)
   //.put(authApi.authenticationRequired, authApi.adminRequired, api.update)
   //.delete(authApi.authenticationRequired, authApi.adminRequired, api.delete)
 }

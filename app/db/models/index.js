@@ -4,9 +4,10 @@ const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
+const configDatabase = require('../../../config/database')
 
 module.exports = app => {
-  const db_conf = app.config.database[app.config.database.mode]
+  const db_conf = configDatabase[configDatabase.mode]
   const db = {}
   let sequelize
   if (db_conf.use_env_variable) {
