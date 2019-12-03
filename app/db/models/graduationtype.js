@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   GraduationType.associate = function(models) {
-    // associations can be defined here
+    GraduationType.hasMany(models.Course, { foreignKey: 'graduationType_id' })
   }
   return GraduationType
 }

@@ -25,6 +25,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('GraduationTypes')
+    return queryInterface.bulkDelete('GraduationTypes', null, {})
   }
 }
