@@ -8,7 +8,7 @@ const loadGraduationTypes = async queryInterface => {
       type: queryInterface.sequelize.QueryTypes.SELECT
     })
   } catch (e) {
-    console.log('Não foi possivel carrgar a lista de GraduationTypes')
+    console.log('Não foi possivel carrgar a lista de GraduationTypes.')
     throw e
   }
 }
@@ -22,7 +22,7 @@ module.exports = {
       graduationType_ids[el.name] = el.id
     }
 
-    //return results
+    //insert Courses on table
     return queryInterface.bulkInsert(
       'Courses',
       [
