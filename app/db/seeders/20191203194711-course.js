@@ -8,7 +8,7 @@ const loadGraduationTypes = async queryInterface => {
       type: queryInterface.sequelize.QueryTypes.SELECT
     })
   } catch (e) {
-    console.log('Não foi possivel carrgar a lista de GraduationTypes.')
+    console.log('Não foi possivel carregar a lista de GraduationTypes.')
     throw e
   }
 }
