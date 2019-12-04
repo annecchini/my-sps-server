@@ -2,17 +2,25 @@
 
 const uuid = require('uuid/v4')
 
+const loadGraduationTypes = async queryInterface => {
+  try {
+    return await queryInterface.sequelize.query(`SELECT id, name FROM GraduationTypes`, {
+      type: queryInterface.sequelize.QueryTypes.SELECT
+    })
+  } catch (e) {
+    console.log('Não foi possivel carrgar a lista de GraduationTypes')
+    throw e
+  }
+}
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     //load GraduationTypes
+    const graduationTypes = await loadGraduationTypes(queryInterface)
     let graduationType_ids = []
-    await queryInterface.sequelize
-      .query(`SELECT id, name FROM GraduationTypes`, { type: queryInterface.sequelize.QueryTypes.SELECT })
-      .then(graduationTypes => {
-        for (const el of graduationTypes) {
-          graduationType_ids[el.name] = el.id
-        }
-      })
+    for (const el of graduationTypes) {
+      graduationType_ids[el.name] = el.id
+    }
 
     //return results
     return queryInterface.bulkInsert(
