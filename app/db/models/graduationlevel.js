@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING
       }
     },
-    {}
+    { paranoid: true }
   )
   GraduationLevel.associate = function(models) {}
   return GraduationLevel

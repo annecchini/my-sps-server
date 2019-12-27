@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: DataTypes.STRING
     },
-    {}
+    { paranoid: true }
   )
   Course.associate = function(models) {
     Course.belongsTo(models.GraduationLevel, { foreignKey: 'graduationLevel_id' })
