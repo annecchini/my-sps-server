@@ -7,11 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      graduationType_id: {
+      graduationLevel_id: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'GraduationTypes',
+          model: 'GraduationLevels',
           key: 'id'
         }
       },

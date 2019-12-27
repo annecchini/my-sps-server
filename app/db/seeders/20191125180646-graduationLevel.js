@@ -5,7 +5,7 @@ const uuid = require('uuid/v4')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
-      'GraduationTypes',
+      'GraduationLevels',
       [
         { id: uuid(), name: 'Aperfeiçoamento' },
         { id: uuid(), name: 'Capacitação' },
@@ -25,6 +25,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('GraduationTypes', null, {})
+    return queryInterface.bulkDelete('GraduationLevels', null, {})
   }
 }

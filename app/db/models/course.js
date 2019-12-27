@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   Course.associate = function(models) {
-    Course.belongsTo(models.GraduationType, { foreignKey: 'graduationType_id' })
+    Course.belongsTo(models.GraduationLevel, { foreignKey: 'graduationLevel_id' })
   }
   return Course
 }
