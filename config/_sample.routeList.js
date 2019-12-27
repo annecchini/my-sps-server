@@ -1,3 +1,3 @@
 module.exports = {
-  graduationType: '/v1/graduationtype'
+  graduationLevel: '/v1/graduationlevel'
 }

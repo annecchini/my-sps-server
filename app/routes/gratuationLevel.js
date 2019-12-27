@@ -1,6 +1,6 @@
 module.exports = app => {
-  const api = app.api.graduationType
-  const route = require('../../config/routeList').graduationType
+  const api = app.api.graduationLevel
+  const route = require('../../config/routeList').graduationLevel
 
   app
     .route(route)
