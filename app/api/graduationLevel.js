@@ -39,25 +39,25 @@ module.exports = app => {
     })
   }
 
-  // api.update = (req, res) => {
-  //   models.GraduationLevel.findById(req.params.id).then(GraduationLevel => {
-  //     if (!GraduationLevel) {
-  //       res.status(400).json(error.parse('graduationLevel-03', {}))
-  //     } else {
-  //       GraduationLevel.update(req.body, { fields: Object.keys(req.body) }).then(
-  //         updated => res.json(updated),
-  //         e => res.status(500).json(error.parse('GraduationLevels-02', e))
-  //       )
-  //     }
-  //   })
-  // }
+  api.update = (req, res) => {
+    models.GraduationLevel.findByPk(req.params.id).then(GraduationLevel => {
+      if (!GraduationLevel) {
+        res.status(400).json(error.parse('graduationLevel-03', {}))
+      } else {
+        GraduationLevel.update(req.body, { fields: Object.keys(req.body) }).then(
+          updated => res.json(updated),
+          e => res.status(500).json(error.parse('GraduationLevels-02', e))
+        )
+      }
+    })
+  }
 
-  // api.delete = (req, res) => {
-  //   models.GraduationLevel.destroy({ where: { id: req.params.id } }).then(
-  //     _ => res.sendStatus(204),
-  //     e => res.status(500).json(error.parse('graduationLevel-02', e))
-  //   )
-  // }
+  api.delete = (req, res) => {
+    models.GraduationLevel.destroy({ where: { id: req.params.id } }).then(
+      _ => res.sendStatus(204),
+      e => res.status(500).json(error.parse('graduationLevel-02', e))
+    )
+  }
 
   return api
 }
