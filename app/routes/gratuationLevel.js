@@ -4,10 +4,10 @@ module.exports = app => {
 
   app
     .route(route)
-    //.post(authApi.authenticationRequired, authApi.adminRequired, api.create)
+    .post(api.create)
     .get(api.list)
 
-  app.route(`${route}/:id`).get(api.specific)
+  app.route(`${route}/:id`).get(api.read)
   //.put(authApi.authenticationRequired, authApi.adminRequired, api.update)
   //.delete(authApi.authenticationRequired, authApi.adminRequired, api.delete)
 }
