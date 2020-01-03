@@ -13,7 +13,7 @@ const validateName = async value => {
   if (value === null || value === '') {
     throw new Error('Este campo é requerido.')
   }
-  //is unique
+  //value is unique
   const alreadyOnDatabase = await models().GraduationLevel.count({ where: { name: value } })
   if (alreadyOnDatabase) {
     throw new Error('Já existe um nível de graduação com esse nome.')
