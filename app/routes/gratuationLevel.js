@@ -11,5 +11,5 @@ module.exports = app => {
     .route(`${route}/:id`)
     .get(api.read)
     .put(api.update)
-  //.delete(authApi.authenticationRequired, authApi.adminRequired, api.delete)
+    .delete(api.delete)
 }

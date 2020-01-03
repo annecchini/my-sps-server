@@ -58,7 +58,13 @@ module.exports = app => {
       } else {
         GraduationLevel.update(req.body, { fields: Object.keys(req.body) }).then(
           updated => res.json(updated),
-          e => res.status(500).json(error.parse('graduationLevel-500', e))
+          e => {
+            if (e.name === 'SequelizeValidationError') {
+              return res.status(400).json(error.parse('graduationLevel-400', e))
+            } else {
+              return res.status(500).json(error.parse('graduationLevel-500', e))
+            }
+          }
         )
       }
     })
