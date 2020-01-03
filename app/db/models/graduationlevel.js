@@ -23,19 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      paranoid: true,
-      validate: {
-        validateName: function testeGlobal() {
-          if (this.name === 'joao') {
-            throw new Error('nome não pode ser joao global')
-          }
-        },
-        validateName2: function testeGlobal2() {
-          if (this.name === 'maria') {
-            throw new Error('nome não pode ser joao global 2')
-          }
-        }
-      }
+      paranoid: true
     }
   )
   GraduationLevel.associate = function(models) {}
