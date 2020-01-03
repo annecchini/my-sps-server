@@ -4,8 +4,6 @@ const Validator = require('validator')
 const { isEmpty } = require('./is-empty')
 const models = require('../db/models/index')
 
-const validateId = async value => {}
-
 const validateName = async value => {
   //value exists
   if (typeof value === 'undefined') {

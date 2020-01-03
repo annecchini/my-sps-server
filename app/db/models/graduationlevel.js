@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        unique: true,
-        allowNull: false,
+        unique: { args: [true], msg: 'Deve ser único' },
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
         validate: {
           validateName: validateName
         }
