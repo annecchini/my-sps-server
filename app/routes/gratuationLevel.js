@@ -7,7 +7,9 @@ module.exports = app => {
     .post(api.create)
     .get(api.list)
 
-  app.route(`${route}/:id`).get(api.read)
-  //.put(authApi.authenticationRequired, authApi.adminRequired, api.update)
+  app
+    .route(`${route}/:id`)
+    .get(api.read)
+    .put(api.update)
   //.delete(authApi.authenticationRequired, authApi.adminRequired, api.delete)
 }

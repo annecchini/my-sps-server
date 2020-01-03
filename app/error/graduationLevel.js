@@ -5,14 +5,21 @@ module.exports = app => {
     let message = {}
 
     switch (code) {
-      case 'graduationLevel-01':
+      case 'graduationLevel-400':
         message = {
           code,
-          userMessage: 'Requisição inválida',
-          devMessage: 'Essa requisição espera um objeto contendo name'
+          userMessage: 'Requisição inválida.',
+          devMessage: e
         }
         break
-      case 'graduationLevel-02':
+      case 'graduationLevel-401':
+        message = {
+          code,
+          userMessage: 'Operação não autorizada.',
+          devMessage: e
+        }
+        break
+      case 'graduationLevel-500':
         message = {
           code,
           userMessage: 'Erro interno do servidor. Contate o administrador.',
