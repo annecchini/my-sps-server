@@ -1,7 +1,5 @@
 'use strict'
-const Validator = require('validator')
 
-const { isEmpty } = require('./is-empty')
 const models = require('../db/models/index')
 
 const validateName = async value => {
