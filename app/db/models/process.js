@@ -3,6 +3,12 @@ module.exports = (sequelize, DataTypes) => {
   const Process = sequelize.define(
     'Process',
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+      },
       identifier: {
         type: DataTypes.STRING,
         allowNull: false

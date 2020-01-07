@@ -1,6 +1,5 @@
 'use strict'
 
-require
 const { validateName } = require('../../validation/graduationLevel')
 
 module.exports = (sequelize, DataTypes) => {
