@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: { args: [true], msg: 'Deve ser único' },
         allowNull: { args: [false], msg: 'Não deve ser nulo.' },
         validate: {
-          validateName: validateName
+          validateName: validateName(sequelize)
         }
       }
     },
