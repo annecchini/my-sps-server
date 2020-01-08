@@ -9,16 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
         primaryKey: true
       },
       name: {
         type: DataTypes.STRING,
         unique: { args: [true], msg: 'Deve ser único' },
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
-        validate: {
-          validateName: validateName(sequelize)
-        }
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
       }
     },
     {
