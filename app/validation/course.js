@@ -22,7 +22,7 @@ const validateName = async (value, models, mode, item) => {
   }
 }
 
-const validateGraduationLevel = async (value, models, mode, item) => {
+const validateGraduationLevelId = async (value, models, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
@@ -50,7 +50,7 @@ const validateBody = async (body, models, mode, item) => {
     errors.push({ message: error, path: 'name' })
   }
 
-  error = await validateGraduationLevel(body.graduationLevel_id, models, mode, item)
+  error = await validateGraduationLevelId(body.graduationLevel_id, models, mode, item)
   if (error) {
     errors.push({ message: error, path: 'graduationLevel_id' })
   }
