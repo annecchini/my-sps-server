@@ -6,31 +6,39 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
         primaryKey: true
       },
       identifier: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
       },
       year: {
         type: DataTypes.STRING(4),
-        allowNull: false
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
       },
       description: {
-        type: DataTypes.STRING(4),
-        allowNull: false
+        type: DataTypes.TEXT,
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
       },
       visible: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
+        defaultValue: false,
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
       }
     },
     { paranoid: true }
   )
+
   Process.associate = function(models) {
     Process.belongsTo(models.Course, { foreignKey: 'course_id' })
   }
+
+  Process.prototype.toJSON = function() {
+    let values = Object.assign({}, this.get())
+    delete values.deletedAt
+    return values
+  }
+
   return Process
 }

@@ -17,9 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: { type: DataTypes.STRING }
     },
-    {
-      paranoid: true
-    }
+    { paranoid: true }
   )
 
   Course.associate = function(models) {

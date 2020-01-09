@@ -16,9 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: { args: [true], msg: 'Deve ser único' }
       }
     },
-    {
-      paranoid: true
-    }
+    { paranoid: true }
   )
 
   GraduationLevel.associate = function(models) {}
