@@ -1,3 +1,5 @@
+'use strict'
+
 const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
 const { validateBody } = require('../validation/graduationLevel')
 
@@ -34,15 +36,15 @@ module.exports = app => {
   }
 
   api.read = async (req, res) => {
-    const GraduationLevel = await models.GraduationLevel.findByPk(req.params.id)
+    const toRead = await models.GraduationLevel.findByPk(req.params.id)
 
     //verify valid id
-    if (!GraduationLevel) {
+    if (!toRead) {
       return res.status(400).json(error.parse('graduationLevel-400', idNotFoundErrorMessage()))
     }
 
     //return result
-    return res.json(GraduationLevel)
+    return res.json(toRead)
   }
 
   api.update = async (req, res) => {

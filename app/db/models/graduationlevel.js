@@ -1,7 +1,5 @@
 'use strict'
 
-const { validateName } = require('../../validation/graduationLevel')
-
 module.exports = (sequelize, DataTypes) => {
   const GraduationLevel = sequelize.define(
     'GraduationLevel',
@@ -14,14 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        unique: { args: [true], msg: 'Deve ser único' },
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
+        unique: { args: [true], msg: 'Deve ser único' }
       }
     },
     {
       paranoid: true
     }
   )
+
   GraduationLevel.associate = function(models) {}
 
   GraduationLevel.prototype.toJSON = function() {

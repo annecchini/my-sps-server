@@ -1,22 +1,37 @@
 'use strict'
 
-const validateName = sequelize => async value => {
-  //value exists
-  if (typeof value === 'undefined') {
-    throw new Error('Este campo é necessário.')
-  }
-  //value is valid
-  if (value === null || value === '') {
-    throw new Error('Este campo é requerido.')
-  }
-  //value is unique
-  const Course = sequelize.import('../db/models/course')
-  const alreadyOnDatabase = await Course.count({
-    where: { name: value }
-  })
-  if (alreadyOnDatabase) {
-    throw new Error('Já existe um curso com esse nome.')
+const validateName = async (value, models, mode, item) => {
+  //value exists and its necessary
+  if (typeof value === 'undefined' && mode === 'create') {
+    return 'Este campo é necessário.'
+  } else if (typeof value !== 'undefined') {
+    //value is valid
+    if (value === null || value === '') {
+      return 'Este campo é requerido.'
+    }
+    //value is unique
+    const Courses = await models.Course.findAll({
+      where: { name: value }
+    })
+    if (Courses.length > 0 && mode === 'update' && Courses.find(x => x.id !== item.id)) {
+      return 'Já existe um curso com esse nome.'
+    }
+    if (Courses.length > 0 && mode !== 'update') {
+      return 'Já existe um curso com esse nome.'
+    }
   }
 }
 
-module.exports = { validateName }
+const validateBody = async (body, models, mode, item) => {
+  let error
+  const errors = []
+
+  error = await validateName(body.name, models, mode, item)
+  if (error) {
+    errors.push({ message: error, path: 'name' })
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody }

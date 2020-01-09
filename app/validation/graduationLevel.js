@@ -10,17 +10,14 @@ const validateName = async (value, models, mode, item) => {
       return 'Este campo é requerido.'
     }
     //value is unique
-    const GL = await models.GraduationLevel.findAll({
+    const GradLevels = await models.GraduationLevel.findAll({
       where: { name: value }
     })
-    if (GL.length > 0) {
-      if (mode === 'update') {
-        if (GL.find(x => x.id !== item.id)) {
-          return 'Já existe um nível de graduação com esse nome.'
-        }
-      } else {
-        return 'Já existe um nível de graduação com esse nome.'
-      }
+    if (GradLevels.length > 0 && mode === 'update' && GradLevels.find(x => x.id !== item.id)) {
+      return 'Já existe um nível de graduação com esse nome.'
+    }
+    if (GradLevels.length > 0 && mode !== 'update') {
+      return 'Já existe um nível de graduação com esse nome.'
     }
   }
 }

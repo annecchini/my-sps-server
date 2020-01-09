@@ -11,7 +11,7 @@ module.exports = app => {
     next()
   }
 
-  const invalidRequestMiddleware = (err, req, res, next) => {
+  const invalidRequestMiddleware = () => (err, req, res, next) => {
     if (err) {
       return res.status(400).json(errorParser().parse('request-400', invalidRequestErrorMessage(err)))
     } else {
@@ -23,5 +23,5 @@ module.exports = app => {
   app.use(corsMiddleware())
   app.use(helmet())
   app.use(bodyParser.json())
-  app.use(invalidRequestMiddleware)
+  app.use(invalidRequestMiddleware())
 }

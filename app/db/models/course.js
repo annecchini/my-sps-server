@@ -1,5 +1,4 @@
 'use strict'
-const { validateName } = require('../../validation/course')
 
 module.exports = (sequelize, DataTypes) => {
   const Course = sequelize.define(
@@ -8,27 +7,32 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
         primaryKey: true
       },
       name: {
         type: DataTypes.STRING,
-        unique: { args: [true], msg: 'Deve ser único' },
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
+        unique: { args: [true], msg: 'Deve ser único' }
       },
       description: { type: DataTypes.STRING }
     },
     {
-      paranoid: true,
-      validate: {
-        validateName: validateName(sequelize)
-      }
+      paranoid: true
     }
   )
+
   Course.associate = function(models) {
     Course.belongsTo(models.GraduationLevel, {
       foreignKey: 'graduationLevel_id'
     })
   }
+
+  Course.prototype.toJSON = function() {
+    let values = Object.assign({}, this.get())
+    delete values.deletedAt
+    return values
+  }
+
   return Course
 }

@@ -9,33 +9,29 @@ module.exports = {
       },
       graduationLevel_id: {
         type: Sequelize.UUID,
-        allowNull: false,
-        references: {
-          model: 'GraduationLevels',
-          key: 'id'
-        }
+        allowNull: false
       },
       name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
-        type: Sequelize.STRING
+        unique: true
       },
       description: {
         type: Sequelize.STRING
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.fn('now'),
+        allowNull: false
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.fn('now'),
+        allowNull: false
       },
       deletedAt: {
-        allowNull: true,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       }
     })
   },
