@@ -3,10 +3,10 @@
 const uuid = require('uuid/v4')
 const bcrypt = require('bcrypt')
 
-let passwordHash = bcrypt.hashSync('senhafraca123', 10)
-
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
+    let passwordHash = await bcrypt.hash('senhafraca123', 10)
+
     return queryInterface.bulkInsert(
       'Users',
       [

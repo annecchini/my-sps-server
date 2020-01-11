@@ -58,5 +58,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
+  User.prototype.toJSON = function() {
+    let values = Object.assign({}, this.get())
+    delete values.password
+    delete values.deletedAt
+    return values
+  }
+
   return User
 }

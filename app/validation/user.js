@@ -1,7 +1,7 @@
 'use strict'
 const Validator = require('validator')
 
-const validateLogin = (value, models, mode, item) => {
+const validateLogin = async (value, models, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
@@ -11,8 +11,18 @@ const validateLogin = (value, models, mode, item) => {
       return 'Este campo é requerido.'
     }
     //value is a email
-    if (Validator.isEmail(value)) {
+    if (!Validator.isEmail(value)) {
       return 'Deve ser um email.'
+    }
+    //value is unique
+    const User = await models.User.findAll({
+      where: { login: value }
+    })
+    if (User.length > 0 && mode === 'update' && User.find(x => x.id !== item.id)) {
+      return 'Já existe um usuário com esse login.'
+    }
+    if (User.length > 0 && mode !== 'update') {
+      return 'Já existe um usuário com esse login.'
     }
   }
 }
@@ -32,7 +42,7 @@ const validatePassword = (value, models, mode, item) => {
 const validateAuthorized = (value, models, mode, item) => {
   if (typeof value !== 'undefined') {
     //value is booblean
-    if (value != true && value != false) {
+    if ((value != true && value != false) || value === '') {
       return 'Formato inválido.'
     }
   }
@@ -41,15 +51,15 @@ const validateAuthorized = (value, models, mode, item) => {
 const validateBody = async (body, models, mode, item) => {
   let errors = []
 
-  const loginError = validateLogin(body.identifier, models, mode, item)
+  const loginError = await validateLogin(body.login, models, mode, item)
   if (loginError) {
     errors.push({ message: loginError, path: 'login' })
   }
-  const passwordError = validatePassword(body.identifier, models, mode, item)
+  const passwordError = validatePassword(body.password, models, mode, item)
   if (passwordError) {
     errors.push({ message: passwordError, path: 'password' })
   }
-  const authorizedError = validateAuthorized(body.identifier, models, mode, item)
+  const authorizedError = validateAuthorized(body.authorized, models, mode, item)
   if (authorizedError) {
     errors.push({ message: authorizedError, path: 'authorized' })
   }

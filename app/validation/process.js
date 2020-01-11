@@ -51,7 +51,7 @@ const validateCourseId = async (value, models, mode, item) => {
 const validateVisible = (value, models, mode, item) => {
   if (typeof value !== 'undefined') {
     //value is booblean
-    if (value != true && value != false) {
+    if ((value != true && value != fals) || value === '') {
       return 'Formato inválido.'
     }
   }
