@@ -11,7 +11,13 @@ module.exports = {
         },
         course_id: {
           type: Sequelize.UUID,
-          allowNull: false
+          allowNull: false,
+          references: {
+            model: 'Courses',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'RESTRICT'
         },
         identifier: {
           type: Sequelize.STRING,

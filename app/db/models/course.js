@@ -15,14 +15,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: { args: [true], msg: 'Deve ser único' }
       },
-      description: { type: DataTypes.STRING }
+      description: {
+        type: DataTypes.STRING
+      }
     },
     { paranoid: true }
   )
 
   Course.associate = function(models) {
     Course.belongsTo(models.GraduationLevel, {
-      foreignKey: 'graduationLevel_id'
+      foreignKey: 'graduationLevel_id',
+      onUpdate: 'CASCADE',
+      onDelete: 'RESTRICT'
     })
   }
 

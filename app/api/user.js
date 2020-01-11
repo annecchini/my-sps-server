@@ -31,6 +31,7 @@ module.exports = app => {
       const created = await models.User.create(req.body)
       return res.status(201).json(created)
     } catch (e) {
+      console.log(e)
       return res.status(500).json(error.parse('user-500', e))
     }
   }

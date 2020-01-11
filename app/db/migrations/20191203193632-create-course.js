@@ -9,7 +9,13 @@ module.exports = {
       },
       graduationLevel_id: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'GraduationLevels',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
       },
       name: {
         type: Sequelize.STRING,
