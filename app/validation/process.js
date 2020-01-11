@@ -88,9 +88,9 @@ const validateUniqueIdentifierYear = async (body, models, mode, item, identifier
 
     if (canUseBodyIdentifier && canUseBodyYear) {
       where = { identifier: body.identifier, year: body.year }
-    } else if (canUseBodyIdentifier) {
+    } else if (canUseBodyIdentifier && !yearError) {
       where = { identifier: body.identifier, year: item.year }
-    } else if (canUseBodyYear) {
+    } else if (canUseBodyYear && !identifierError) {
       where = { identifier: item.identifier, year: body.year }
     }
     if (where) {
