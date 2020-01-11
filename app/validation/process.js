@@ -57,6 +57,15 @@ const validateVisible = (value, models, mode, item) => {
   }
 }
 
+const validateDescription = (value, models, mode, item) => {
+  if (typeof value !== 'undefined') {
+    //value is not null
+    if (value === null) {
+      return 'Este campo não pode ser nulo.'
+    }
+  }
+}
+
 const validateUniqueIdentifierYear = async (body, models, mode, item, identifierError, yearError) => {
   if (mode === 'create') {
     if (!identifierError && !yearError) {
@@ -64,8 +73,9 @@ const validateUniqueIdentifierYear = async (body, models, mode, item, identifier
         where: { identifier: body.identifier, year: body.year }
       })
       if (Processes.length > 0) {
-        errors.push(uniqueErrorIdentifier)
-        errors.push(uniqueErrorYear)
+        const uniqueErrorIdentifier = { message: 'A combinação identificador/ano deve ser única.', path: 'identifier' }
+        const uniqueErrorYear = { message: 'A combinação identificador/ano deve ser única.', path: 'year' }
+        return [uniqueErrorIdentifier, uniqueErrorYear]
       }
     }
   }
@@ -115,6 +125,11 @@ const validateBody = async (body, models, mode, item) => {
   const visibleError = await validateVisible(body.visible, models, mode, item)
   if (visibleError) {
     errors.push({ message: visibleError, path: 'visible' })
+  }
+
+  const descriptionError = await validateDescription(body.description, models, mode, item)
+  if (descriptionError) {
+    errors.push({ message: descriptionError, path: 'description' })
   }
 
   const uniqueIdentifierYearErrors = await validateUniqueIdentifierYear(body, models, mode, item, identifierError, yearError)

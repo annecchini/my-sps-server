@@ -9,22 +9,22 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
+        allowNull: false,
         primaryKey: true
       },
       login: {
         type: DataTypes.STRING,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
+        allowNull: false,
         unique: { args: [true], msg: 'Deve ser único' }
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: false
       },
       authorized: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: false
       }
     },
     { paranoid: true }

@@ -23,7 +23,7 @@ module.exports = {
         },
         description: {
           type: Sequelize.TEXT,
-          allowNull: true
+          allowNull: false
         },
         visible: {
           type: Sequelize.BOOLEAN,

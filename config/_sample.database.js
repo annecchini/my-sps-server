@@ -1,8 +1,8 @@
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   development: {
-    username: 'root',
-    password: 'root',
+    username: 'username',
+    password: 'password',
     database: 'my_sps_server_development',
     host: '127.0.0.1',
     dialect: 'mysql',

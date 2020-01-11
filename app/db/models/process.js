@@ -6,25 +6,26 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' },
+        allowNull: false,
         primaryKey: true
       },
       identifier: {
         type: DataTypes.STRING,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: false
       },
       year: {
         type: DataTypes.STRING(4),
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: false
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        defaultValue: '',
+        allowNull: false
       },
       visible: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-        allowNull: { args: [false], msg: 'Não deve ser nulo.' }
+        allowNull: false
       }
     },
     { paranoid: true }
