@@ -1,2 +1,3 @@
-1 - User: Usuário com deletedAt preenchido não pode ser criado novamente.
-2 - GraduationLevel/Course: É possivel deletar um GraduationLevel associado a um Course.
+- User: Usuário com deletedAt preenchido não pode ser criado novamente.
+- GraduationLevel/Course: É possivel deletar um GraduationLevel já associado a um Course.
+- Course/Process: É possivel deletar um Course já associado a um Process.
