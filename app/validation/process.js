@@ -85,6 +85,16 @@ const validateUniqueIdentifierYear = async (body, models, mode, item, identifier
   }
 }
 
+const validateVisible = (value, models, mode, item) => {
+  if (typeof value !== 'undefined') {
+    //value is booblean
+    console.log(value)
+    if (value != true && value != false) {
+      return 'Formato inválido.'
+    }
+  }
+}
+
 const validateBody = async (body, models, mode, item) => {
   let errors = []
 
@@ -101,6 +111,11 @@ const validateBody = async (body, models, mode, item) => {
   const courseIdError = await validateCourseId(body.course_id, models, mode, item)
   if (courseIdError) {
     errors.push({ message: courseIdError, path: 'course_id' })
+  }
+
+  const visibleError = await validateVisible(body.visible, models, mode, item)
+  if (visibleError) {
+    errors.push({ message: visibleError, path: 'visible' })
   }
 
   const uniqueIdentifierYearErrors = await validateUniqueIdentifierYear(body, models, mode, item, identifierError, yearError)
