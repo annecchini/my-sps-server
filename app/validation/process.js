@@ -48,6 +48,15 @@ const validateCourseId = async (value, models, mode, item) => {
   }
 }
 
+const validateVisible = (value, models, mode, item) => {
+  if (typeof value !== 'undefined') {
+    //value is booblean
+    if (value != true && value != false) {
+      return 'Formato inválido.'
+    }
+  }
+}
+
 const validateUniqueIdentifierYear = async (body, models, mode, item, identifierError, yearError) => {
   if (mode === 'create') {
     if (!identifierError && !yearError) {
@@ -81,16 +90,6 @@ const validateUniqueIdentifierYear = async (body, models, mode, item, identifier
       const uniqueErrorIdentifier = { message: 'A combinação identificador/ano deve ser única.', path: 'identifier' }
       const uniqueErrorYear = { message: 'A combinação identificador/ano deve ser única.', path: 'year' }
       return [uniqueErrorIdentifier, uniqueErrorYear]
-    }
-  }
-}
-
-const validateVisible = (value, models, mode, item) => {
-  if (typeof value !== 'undefined') {
-    //value is booblean
-    console.log(value)
-    if (value != true && value != false) {
-      return 'Formato inválido.'
     }
   }
 }
