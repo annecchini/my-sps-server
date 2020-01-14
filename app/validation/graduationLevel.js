@@ -34,4 +34,18 @@ const validateBody = async (body, models, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody }
+const validateDelete = async (graduationLevel, models) => {
+  const errors = []
+
+  //validate course constraint
+  const Courses = await models.Course.findAll({
+    where: { graduationLevel_id: graduationLevel.id }
+  })
+  if (Courses.length > 0) {
+    errors.push({ message: 'Este nivel de graduação está associado a cursos ativos.', path: 'message' })
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody, validateDelete }
