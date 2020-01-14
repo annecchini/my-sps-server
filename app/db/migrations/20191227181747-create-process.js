@@ -49,12 +49,15 @@ module.exports = {
         deletedAt: {
           type: Sequelize.DATE,
           allowNull: true
+        },
+        isActive: {
+          type: 'INT(1) GENERATED ALWAYS AS (IF(deletedAt IS NULL,  1, NULL)) VIRTUAL'
         }
       },
       {
         uniqueKeys: {
-          unique_identifier_year: {
-            fields: ['identifier', 'year']
+          unique_identifier_year_isActive: {
+            fields: ['identifier', 'year', 'isActive']
           }
         }
       }

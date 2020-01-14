@@ -16,22 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       deletedAt: {
         type: DataTypes.DATE,
-        allowNull: true,
-        unique: 'nd'
-      },
-      isActive: {
-        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN),
-        allowNull: true,
-        get: function() {
-          return this.getDataValue('deletedAt') === null ? 1 : null
-        },
-        unique: 'nd'
+        allowNull: true
       }
     },
     { paranoid: true }
   )
-
-  GraduationLevel.associate = function(models) {}
 
   GraduationLevel.prototype.toJSON = function() {
     let values = Object.assign({}, this.get())
