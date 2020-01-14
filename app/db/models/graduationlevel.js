@@ -12,8 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: { args: [true], msg: 'Deve ser único' }
+        allowNull: false
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        unique: 'nd'
+      },
+      isActive: {
+        type: DataTypes.VIRTUAL(DataTypes.BOOLEAN),
+        allowNull: true,
+        get: function() {
+          return this.getDataValue('deletedAt') === null ? 1 : null
+        },
+        unique: 'nd'
       }
     },
     { paranoid: true }

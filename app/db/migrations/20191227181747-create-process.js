@@ -53,7 +53,7 @@ module.exports = {
       },
       {
         uniqueKeys: {
-          identifier_year_unique: {
+          unique_identifier_year: {
             fields: ['identifier', 'year']
           }
         }
