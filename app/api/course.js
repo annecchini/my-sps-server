@@ -1,7 +1,7 @@
 'use strict'
 
 const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
-const { validateBody } = require('../validation/course')
+const { validateBody, validateDelete } = require('../validation/course')
 
 module.exports = app => {
   const models = app.db.models.index
@@ -78,6 +78,12 @@ module.exports = app => {
     //verify valid id
     if (!toDelete) {
       return res.status(400).json(error.parse('course-400', idNotFoundErrorMessage()))
+    }
+
+    //validação de constraint
+    const errors = await validateDelete(toDelete, models)
+    if (errors) {
+      return res.status(400).json(error.parse('graduationLevel-400', generateValidationErrorMessage(errors)))
     }
 
     //try to delete

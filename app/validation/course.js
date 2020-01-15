@@ -58,4 +58,18 @@ const validateBody = async (body, models, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody }
+const validateDelete = async (course, models) => {
+  const errors = []
+
+  //validate process constraint
+  const Processes = await models.Process.findAll({
+    where: { course_id: course.id }
+  })
+  if (Processes.length > 0) {
+    errors.push({ message: 'Este curso está associado a processos ativos.', path: 'id' })
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody, validateDelete }

@@ -42,7 +42,7 @@ const validateDelete = async (graduationLevel, models) => {
     where: { graduationLevel_id: graduationLevel.id }
   })
   if (Courses.length > 0) {
-    errors.push({ message: 'Este nivel de graduação está associado a cursos ativos.', path: 'message' })
+    errors.push({ message: 'Este nivel de graduação está associado a cursos ativos.', path: 'id' })
   }
 
   return errors.length > 0 ? errors : null

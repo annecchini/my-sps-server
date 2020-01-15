@@ -73,17 +73,16 @@ module.exports = app => {
   }
 
   api.delete = async (req, res) => {
-    const GraduationLevel = await models.GraduationLevel.findByPk(req.params.id)
+    const toDelete = await models.GraduationLevel.findByPk(req.params.id)
 
     //verify valid id
-    if (!GraduationLevel) {
+    if (!toDelete) {
       return res.status(400).json(error.parse('graduationLevel-400', idNotFoundErrorMessage()))
     }
 
     //validação de constraint
-    const errors = await validateDelete(GraduationLevel, models)
+    const errors = await validateDelete(toDelete, models)
     if (errors) {
-      console.log(errors)
       return res.status(400).json(error.parse('graduationLevel-400', generateValidationErrorMessage(errors)))
     }
 

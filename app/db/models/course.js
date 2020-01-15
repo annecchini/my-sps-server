@@ -22,11 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   )
 
   Course.associate = function(models) {
-    Course.belongsTo(models.GraduationLevel, {
-      foreignKey: 'graduationLevel_id',
-      onUpdate: 'CASCADE',
-      onDelete: 'RESTRICT'
-    })
+    Course.belongsTo(models.GraduationLevel, { foreignKey: 'graduationLevel_id' })
   }
 
   Course.prototype.toJSON = function() {
