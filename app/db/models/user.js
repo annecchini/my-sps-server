@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     return await bcrypt.compare(password, this.password)
   }
 
+  User.afterDestroy((user, _) => {
+    return sequelize.models.GlobalAdmin.destroy({ where: { user_id: user.id } })
+  })
+
   User.beforeCreate((user, _) => {
     return bcrypt
       .hash(user.password, 10)

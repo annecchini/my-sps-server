@@ -65,6 +65,8 @@ const validateBody = async (body, models, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
+//##### Athenticate functions #####//
+
 const validateLoginAuth = async (value, models) => {
   //value exists
   if (typeof value === 'undefined') {

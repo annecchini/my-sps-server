@@ -1,4 +1,1 @@
-- GraduationLevel/Course: É possivel deletar um GraduationLevel já associado a um Course.
-  -- Solução 01 validadar antes de deletar.
-  -- Solução 02 buscar todos os contraints no onDelete e RESTRICT se existir o elemento estiver associado a alguem.
-- Course/Process: É possivel deletar um Course já associado a um Process.
+-

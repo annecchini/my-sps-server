@@ -1,10 +1,6 @@
 'use strict'
 
-const {
-  idNotFoundErrorMessage,
-  generateValidationErrorMessage,
-  generateUnauthorizedErrorMessage
-} = require('../lib/error-helpers')
+const { idNotFoundErrorMessage, generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../lib/error-helpers')
 const { validateBody, validateAuth, validateAuthorizedAuth } = require('../validation/user')
 const jwt = require('jsonwebtoken')
 const jwtConf = require('../../config/jwt')
@@ -88,7 +84,7 @@ module.exports = app => {
 
     //try to delete
     try {
-      models.User.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      models.User.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
       return res.status(500).json(error.parse('user-500', e))
     }
