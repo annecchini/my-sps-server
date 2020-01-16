@@ -52,8 +52,6 @@ module.exports = (sequelize, DataTypes) => {
         .catch(e => {
           throw new Error()
         })
-    } else {
-      return user
     }
   })
 

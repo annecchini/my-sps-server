@@ -67,4 +67,48 @@ const validateBody = async (body, models, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody }
+const validateLoginAuth = value => {
+  //value exists
+  if (typeof value === 'undefined') {
+    return 'Este campo é necessário.'
+  }
+  //value is valid
+  if (value === null || value === '') {
+    return 'Este campo é requerido.'
+  }
+}
+
+const validatePasswordAuth = (value, models) => {
+  //value exists
+  if (typeof value === 'undefined') {
+    return 'Este campo é necessário.'
+  }
+  //value is valid
+  if (value === null || value === '') {
+    return 'Este campo é requerido.'
+  }
+}
+
+const validateAuth = (body, models) => {
+  let errors = []
+
+  const loginError = validateLoginAuth(body.login, models)
+  if (loginError) {
+    errors.push({ message: loginError, path: 'login' })
+  }
+
+  const passwordError = validatePasswordAuth(body.password, models)
+  if (passwordError) {
+    errors.push({ message: passwordError, path: 'password' })
+  }
+
+  //validate authentication
+
+  return errors.length > 0 ? errors : null
+}
+
+const validateAuthorizedAuth = (body, models) => {
+  //user have authorized true
+}
+
+module.exports = { validateBody, validateAuth }

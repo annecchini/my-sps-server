@@ -89,5 +89,47 @@ module.exports = app => {
     }
   }
 
+  api.authenticate = (req, res) => {
+    //validation
+    const validationErrors = validateAuth(req.body, models)
+    if (validationErrors) {
+      return res.status(400).json(error.parse('user-400', generateValidationErrorMessage(errors)))
+    }
+
+    //authorization
+    const authorizedErrors = validateAuthorizedAuth(req.body, models)
+    if (authorizedErrors) {
+      return res.status(401).json(error.parse('user-401', generateValidationErrorMessage(errors)))
+    }
+
+    //send the token to the user
+    let access_token = jwt.sign({ data: user.id }, app.get('jwt_secret'), { expiresIn: '6h' })
+    return res.json({ access_token, userMessage: 'Authentication success' })
+
+    // if (req.body && req.body.login && req.body.password) {
+    //   models.User.findOne({ where: { login: req.body.login } }).then(
+    //     user => {
+    //       if (!user) {
+    //         res.status(401).json(error.parse('auth-04', 'This login was not found.'))
+    //       } else if (!user.authorized) {
+    //         res.status(401).json(error.parse('auth-09', new Error('User is unauthorized')))
+    //       } else {
+    //         user.validPassword(req.body.password).then(valid => {
+    //           if (valid) {
+    //             let access_token = jwt.sign({ data: user.id }, app.get('jwt_secret'), { expiresIn: '6h' })
+    //             res.json({ access_token, userMessage: 'Authentication success' })
+    //           } else {
+    //             res.status(401).json(error.parse('auth-05', 'Wrong user or password.'))
+    //           }
+    //         })
+    //       }
+    //     },
+    //     e => res.status(500).json(error.parse('auth-06', 'Internal server error.'))
+    //   )
+    // } else {
+    //   res.status(400).json(error.parse('auth-03', 'The request must provide a login and password.'))
+    // }
+  }
+
   return api
 }
