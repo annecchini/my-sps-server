@@ -65,5 +65,6 @@ config/database.js
 config/site.js
 config/secrets.js
 config/routeList.js
+config/jwt.js
 
 .vscode

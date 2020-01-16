@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   }
 
+  User.prototype.validPassword = async function(password) {
+    return await bcrypt.compare(password, this.password)
+  }
+
   User.beforeCreate((user, _) => {
     return bcrypt
       .hash(user.password, 10)

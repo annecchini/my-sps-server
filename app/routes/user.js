@@ -7,6 +7,8 @@ module.exports = app => {
     .post(api.create)
     .get(api.list)
 
+  app.route(`${route}/auth`).post(api.authenticate)
+
   app
     .route(`${route}/:id`)
     .get(api.read)

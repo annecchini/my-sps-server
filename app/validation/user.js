@@ -15,9 +15,7 @@ const validateLogin = async (value, models, mode, item) => {
       return 'Deve ser um email.'
     }
     //value is unique
-    const User = await models.User.findAll({
-      where: { login: value }
-    })
+    const User = await models.User.findAll({ where: { login: value } })
     if (User.length > 0 && mode === 'update' && User.find(x => x.id !== item.id)) {
       return 'Já existe um usuário com esse login.'
     }
@@ -67,7 +65,7 @@ const validateBody = async (body, models, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-const validateLoginAuth = value => {
+const validateLoginAuth = async (value, models) => {
   //value exists
   if (typeof value === 'undefined') {
     return 'Este campo é necessário.'
@@ -75,6 +73,11 @@ const validateLoginAuth = value => {
   //value is valid
   if (value === null || value === '') {
     return 'Este campo é requerido.'
+  }
+  //value exits
+  const user = await models.User.findOne({ where: { login: value } })
+  if (!user) {
+    return 'Usuário não encontrado.'
   }
 }
 
@@ -89,10 +92,20 @@ const validatePasswordAuth = (value, models) => {
   }
 }
 
-const validateAuth = (body, models) => {
+const validateAuthetication = async (login, password, loginError, passwordError, models) => {
+  if (!loginError && !passwordError) {
+    const user = await models.User.findOne({ where: { login: login } })
+    const valid = await user.validPassword(password)
+    if (!valid) {
+      return 'Usuário ou senha incorretos.'
+    }
+  }
+}
+
+const validateAuth = async (body, models) => {
   let errors = []
 
-  const loginError = validateLoginAuth(body.login, models)
+  const loginError = await validateLoginAuth(body.login, models)
   if (loginError) {
     errors.push({ message: loginError, path: 'login' })
   }
@@ -103,12 +116,20 @@ const validateAuth = (body, models) => {
   }
 
   //validate authentication
+  const authError = await validateAuthetication(body.login, body.password, loginError, passwordError, models)
+  if (authError) {
+    errors.push({ message: authError, path: 'login' })
+  }
 
   return errors.length > 0 ? errors : null
 }
 
-const validateAuthorizedAuth = (body, models) => {
-  //user have authorized true
+const validateAuthorizedAuth = async (login, models) => {
+  const user = await models.User.findOne({ where: { login: login } })
+  const authorized = user.authorized
+  if (!authorized) {
+    return [{ message: 'Usuário não autorizado.', path: 'authorized' }]
+  }
 }
 
-module.exports = { validateBody, validateAuth }
+module.exports = { validateBody, validateAuth, validateAuthorizedAuth }

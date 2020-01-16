@@ -31,4 +31,16 @@ const generateValidationErrorMessage = errors => {
   }
 }
 
-module.exports = { idNotFoundErrorMessage, generateValidationErrorMessage, invalidRequestErrorMessage }
+const generateUnauthorizedErrorMessage = errors => {
+  return {
+    name: 'UnauthorizedError',
+    errors: errors
+  }
+}
+
+module.exports = {
+  idNotFoundErrorMessage,
+  generateValidationErrorMessage,
+  invalidRequestErrorMessage,
+  generateUnauthorizedErrorMessage
+}
