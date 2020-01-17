@@ -37,8 +37,18 @@ module.exports = (sequelize, DataTypes) => {
     return await bcrypt.compare(password, this.password)
   }
 
-  User.afterDestroy((user, _) => {
-    return sequelize.models.GlobalAdmin.destroy({ where: { user_id: user.id } })
+  User.beforeDestroy(async (user, _) => {
+    //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
+    //vazio
+
+    //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
+    const t = await sequelize.transaction()
+    try {
+      await sequelize.models.GlobalAdmin.destroy({ where: { user_id: user.id }, transaction: t })
+    } catch (e) {
+      await t.rollback()
+      throw e
+    }
   })
 
   User.beforeCreate((user, _) => {

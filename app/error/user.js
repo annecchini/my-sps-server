@@ -19,6 +19,13 @@ module.exports = app => {
           devMessage: e
         }
         break
+      case 'user-403':
+        message = {
+          code,
+          userMessage: 'Operação proibida.',
+          devMessage: e
+        }
+        break
       case 'user-500':
         message = {
           code,

@@ -1,5 +1,7 @@
 'use strict'
 
+const { validateDelete } = require('../../validation/graduationLevel')
+
 module.exports = (sequelize, DataTypes) => {
   const GraduationLevel = sequelize.define(
     'GraduationLevel',
@@ -21,6 +23,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     { paranoid: true }
   )
+
+  GraduationLevel.beforeDestroy(async (graduationLevel, _) => {
+    //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
+    const errors = await validateDelete(graduationLevel, sequelize.models)
+    if (errors) {
+      throw { name: 'DeleteAssociatedError', errors: errors }
+    }
+
+    //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
+    //vazio
+  })
 
   GraduationLevel.prototype.toJSON = function() {
     let values = Object.assign({}, this.get())

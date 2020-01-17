@@ -80,16 +80,19 @@ module.exports = app => {
       return res.status(400).json(error.parse('graduationLevel-400', idNotFoundErrorMessage()))
     }
 
-    //validação de constraint
-    const errors = await validateDelete(toDelete, models)
-    if (errors) {
-      return res.status(400).json(error.parse('graduationLevel-400', generateValidationErrorMessage(errors)))
-    }
+    //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
+    // const errors = await validateDelete(toDelete, models)
+    // if (errors) {
+    //   return res.status(400).json(error.parse('graduationLevel-400', generateValidationErrorMessage(errors)))
+    // }
 
     //try to delete
     try {
-      models.GraduationLevel.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      await models.GraduationLevel.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
+      if (e.name === 'DeleteAssociatedError') {
+        return res.status(403).json(error.parse('graduationLevel-403', e))
+      }
       return res.status(500).json(error.parse('graduationLevel-500', e))
     }
   }
