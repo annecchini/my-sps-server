@@ -1,1 +1,0 @@
-- colocar individualHooks:true em todos os cruds.
