@@ -87,7 +87,7 @@ module.exports = app => {
       db.User.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'DeleteAssociatedError') {
-        return res.status(403).json(error.parse('graduationLevel-403', e))
+        return res.status(403).json(error.parse('user-403', e))
       }
       return res.status(500).json(error.parse('user-500', e))
     }

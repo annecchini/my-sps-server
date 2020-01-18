@@ -1,12 +1,12 @@
 'use strict'
 
 const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
-const { validateBody } = require('../validation/process')
+const { validateBody } = require('../validation/globalAdmin')
 
 module.exports = app => {
   const db = app.db.models.index
   const api = {}
-  const error = app.error.process
+  const error = app.error.globalAdmin
 
   api.list = (req, res) => {
     db.GlobalAdmin.findAll({ order: [['createdAt', 'DESC']] }).then(
@@ -14,7 +14,7 @@ module.exports = app => {
         return res.json(toList)
       },
       e => {
-        return res.status(500).json(error.parse('process-500', e))
+        return res.status(500).json(error.parse('globalAdmin-500', e))
       }
     )
   }
@@ -23,24 +23,24 @@ module.exports = app => {
     //validation
     const errors = await validateBody(req.body, db, 'create')
     if (errors) {
-      return res.status(400).json(error.parse('process-400', generateValidationErrorMessage(errors)))
+      return res.status(400).json(error.parse('globalAdmin-400', generateValidationErrorMessage(errors)))
     }
 
     //try to create
     try {
-      const created = await db.Process.create(req.body)
+      const created = await db.GlobalAdmin.create(req.body)
       return res.status(201).json(created)
     } catch (e) {
-      return res.status(500).json(error.parse('process-500', e))
+      return res.status(500).json(error.parse('globalAdmin-500', e))
     }
   }
 
   api.read = async (req, res) => {
-    const toRead = await db.Process.findByPk(req.params.id)
+    const toRead = await db.GlobalAdmin.findByPk(req.params.id)
 
     //verify valid id
     if (!toRead) {
-      return res.status(400).json(error.parse('process-400', idNotFoundErrorMessage()))
+      return res.status(400).json(error.parse('globalAdmin-400', idNotFoundErrorMessage()))
     }
 
     //return result
@@ -48,17 +48,17 @@ module.exports = app => {
   }
 
   api.update = async (req, res) => {
-    const toUpdate = await db.Process.findByPk(req.params.id)
+    const toUpdate = await db.GlobalAdmin.findByPk(req.params.id)
 
     //verify valid id
     if (!toUpdate) {
-      return res.status(400).json(error.parse('process-400', idNotFoundErrorMessage()))
+      return res.status(400).json(error.parse('globalAdmin-400', idNotFoundErrorMessage()))
     }
 
     //validation
     const errors = await validateBody(req.body, db, 'update', toUpdate)
     if (errors) {
-      return res.status(400).json(error.parse('process-400', generateValidationErrorMessage(errors)))
+      return res.status(400).json(error.parse('globalAdmin-400', generateValidationErrorMessage(errors)))
     }
 
     //try to update
@@ -68,26 +68,26 @@ module.exports = app => {
       })
       return res.json(updated)
     } catch (e) {
-      return res.status(500).json(error.parse('process-500', e))
+      return res.status(500).json(error.parse('globalAdmin-500', e))
     }
   }
 
   api.delete = async (req, res) => {
-    const toDelete = await db.Process.findByPk(req.params.id)
+    const toDelete = await db.GlobalAdmin.findByPk(req.params.id)
 
     //verify valid id
     if (!toDelete) {
-      return res.status(400).json(error.parse('process-400', idNotFoundErrorMessage()))
+      return res.status(400).json(error.parse('globalAdmin-400', idNotFoundErrorMessage()))
     }
 
     //try to delete
     try {
-      db.Process.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      db.GlobalAdmin.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'DeleteAssociatedError') {
-        return res.status(403).json(error.parse('graduationLevel-403', e))
+        return res.status(403).json(error.parse('globalAdmin-403', e))
       }
-      return res.status(500).json(error.parse('process-500', e))
+      return res.status(500).json(error.parse('globalAdmin-500', e))
     }
   }
 

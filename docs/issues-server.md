@@ -1,1 +1,2 @@
-- separar user e auth?
+- Admin crud.
+- colocar individualHooks:true em todos os cruds.

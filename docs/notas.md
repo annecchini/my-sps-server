@@ -5,3 +5,7 @@
 - Nos hooks beforeDestroy do modelos exitem procedimentos para emular onDelete "RESTRICT" e "CASCADE"/"SET NULL". Apesar de mais complicado, Estão lá pois:
   - Fazem as verificações para todos os modelos envolvidos. (validateDelete)
   - Propagam as mudanças para todos os modelos envolvidos. (transação para deletar ou setar Null)
+
+# GlobalAdmin
+
+Usar findOrCreate ou só create? (Está create por enquanto.)

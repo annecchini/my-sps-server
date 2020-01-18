@@ -4,14 +4,12 @@ module.exports = app => {
 
   app
     .route(route)
-    // .post(api.create)
+    .post(api.create)
     .get(api.list)
 
-  // app.route(`${route}/auth`).post(api.authenticate)
-
-  // app
-  //   .route(`${route}/:id`)
-  //   .get(api.read)
-  //   .put(api.update)
-  //   .delete(api.delete)
+  app
+    .route(`${route}/:id`)
+    .get(api.read)
+    .put(api.update)
+    .delete(api.delete)
 }

@@ -83,7 +83,7 @@ module.exports = app => {
     //validação de constraint
     const errors = await validateDelete(toDelete, db)
     if (errors) {
-      return res.status(403).json(error.parse('graduationLevel-403', generateValidationErrorMessage(errors)))
+      return res.status(403).json(error.parse('course-403', generateValidationErrorMessage(errors)))
     }
 
     //try to delete

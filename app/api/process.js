@@ -85,7 +85,7 @@ module.exports = app => {
       db.Process.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'DeleteAssociatedError') {
-        return res.status(403).json(error.parse('graduationLevel-403', e))
+        return res.status(403).json(error.parse('process-403', e))
       }
       return res.status(500).json(error.parse('process-500', e))
     }

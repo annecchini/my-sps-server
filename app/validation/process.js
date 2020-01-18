@@ -43,7 +43,7 @@ const validateCourseId = async (value, db, mode, item) => {
       where: { id: value }
     })
     if (!Course) {
-      return 'O Curso não existe na base de dados.'
+      return 'O curso não existe na base de dados.'
     }
   }
 }
