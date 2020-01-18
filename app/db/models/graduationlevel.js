@@ -15,10 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-      deletedAt: {
-        type: DataTypes.DATE,
-        allowNull: true
       }
     },
     { paranoid: true }
