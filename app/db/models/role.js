@@ -31,6 +31,15 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   }
 
+  Role.beforeDestroy(async (role, _) => {
+    //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
+    //OPÇÃO 01 - Restringir deleção se estiver associado a um UserRole?
+    //vazio
+    //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
+    //OPÇÃO 02 - Destruir UserRoles relacionados?
+    //vazio
+  })
+
   Role.prototype.toJSON = function() {
     let values = Object.assign({}, this.get())
     delete values.deletedAt
