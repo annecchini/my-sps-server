@@ -82,7 +82,7 @@ module.exports = app => {
 
     //try to delete
     try {
-      db.Process.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      db.Process.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'DeleteAssociatedError') {
         return res.status(403).json(error.parse('process-403', e))

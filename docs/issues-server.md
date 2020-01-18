@@ -1,2 +1,1 @@
-- Admin crud.
 - colocar individualHooks:true em todos os cruds.

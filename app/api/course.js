@@ -88,7 +88,7 @@ module.exports = app => {
 
     //try to delete
     try {
-      db.Course.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      db.Course.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'DeleteAssociatedError') {
         return res.status(403).json(error.parse('course-403', e))
