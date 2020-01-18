@@ -22,7 +22,9 @@ module.exports = {
           allowNull: false
         },
         description: {
-          type: Sequelize.STRING
+          type: Sequelize.STRING,
+          defaultValue: '',
+          allowNull: false
         },
         createdAt: {
           type: Sequelize.DATE,

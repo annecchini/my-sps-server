@@ -8,13 +8,12 @@ module.exports = {
       {
         id: {
           type: Sequelize.UUID,
-          defaultValue: Sequelize.UUIDV4,
           allowNull: false,
           primaryKey: true
         },
         name: {
-          allowNull: false,
-          type: Sequelize.STRING
+          type: Sequelize.STRING,
+          allowNull: false
         },
         createdAt: {
           type: Sequelize.DATE,

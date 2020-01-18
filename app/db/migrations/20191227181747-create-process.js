@@ -27,6 +27,7 @@ module.exports = {
         },
         description: {
           type: Sequelize.TEXT,
+          defaultValue: '',
           allowNull: false
         },
         visible: {

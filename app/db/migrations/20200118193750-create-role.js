@@ -2,30 +2,36 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'GlobalAdmins',
+      'Roles',
       {
         id: {
           type: Sequelize.UUID,
           allowNull: false,
           primaryKey: true
         },
-        user_id: {
-          type: Sequelize.UUID,
-          allowNull: false,
-          references: {
-            model: 'Users',
-            key: 'id'
-          }
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        description: {
+          type: Sequelize.TEXT,
+          defaultValue: '',
+          allowNull: false
+        },
+        global: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+          allowNull: false
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.fn('now')
+          defaultValue: Sequelize.fn('now'),
+          allowNull: false
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.fn('now')
+          defaultValue: Sequelize.fn('now'),
+          allowNull: false
         },
         deletedAt: {
           type: Sequelize.DATE,
@@ -38,13 +44,13 @@ module.exports = {
       {
         uniqueKeys: {
           unique_name_isActive: {
-            fields: ['user_id', 'isActive']
+            fields: ['name', 'isActive']
           }
         }
       }
     )
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('GlobalAdmins')
+    return queryInterface.dropTable('Roles')
   }
 }
