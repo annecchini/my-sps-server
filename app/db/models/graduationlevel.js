@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
     const errors = await validateDelete(graduationLevel, sequelize.models)
     if (errors) {
-      throw { name: 'DeleteAssociatedError', errors: errors }
+      throw { name: 'DeleteAssociatedError', traceback: 'GraduationLevel', errors: errors }
     }
 
     //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')

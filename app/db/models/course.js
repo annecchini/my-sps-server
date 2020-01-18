@@ -1,5 +1,7 @@
 'use strict'
 
+const { validateDelete } = require('../../validation/course')
+
 module.exports = (sequelize, DataTypes) => {
   const Course = sequelize.define(
     'Course',
@@ -24,6 +26,17 @@ module.exports = (sequelize, DataTypes) => {
   Course.associate = function(models) {
     Course.belongsTo(models.GraduationLevel, { foreignKey: 'graduationLevel_id' })
   }
+
+  Course.beforeDestroy(async (course, _) => {
+    //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
+    const errors = await validateDelete(course, sequelize.models)
+    if (errors) {
+      throw { name: 'DeleteAssociatedError', traceback: 'Course', errors: errors }
+    }
+
+    //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
+    //vazio
+  })
 
   Course.prototype.toJSON = function() {
     let values = Object.assign({}, this.get())

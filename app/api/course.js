@@ -4,12 +4,12 @@ const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../l
 const { validateBody, validateDelete } = require('../validation/course')
 
 module.exports = app => {
-  const models = app.db.models.index
+  const db = app.db.models.index
   const api = {}
   const error = app.error.course
 
   api.list = (req, res) => {
-    models.Course.findAll({ order: [['name', 'ASC']] }).then(
+    db.Course.findAll({ order: [['name', 'ASC']] }).then(
       Courses => {
         return res.json(Courses)
       },
@@ -21,14 +21,14 @@ module.exports = app => {
 
   api.create = async (req, res) => {
     //validation
-    const errors = await validateBody(req.body, models, 'create')
+    const errors = await validateBody(req.body, db, 'create')
     if (errors) {
       return res.status(400).json(error.parse('course-400', generateValidationErrorMessage(errors)))
     }
 
     //try to create
     try {
-      const created = await models.Course.create(req.body)
+      const created = await db.Course.create(req.body)
       return res.status(201).json(created)
     } catch (e) {
       return res.status(500).json(error.parse('course-500', e))
@@ -36,7 +36,7 @@ module.exports = app => {
   }
 
   api.read = async (req, res) => {
-    const toRead = await models.Course.findByPk(req.params.id)
+    const toRead = await db.Course.findByPk(req.params.id)
 
     //verify valid id
     if (!toRead) {
@@ -48,7 +48,7 @@ module.exports = app => {
   }
 
   api.update = async (req, res) => {
-    const toUpdate = await models.Course.findByPk(req.params.id)
+    const toUpdate = await db.Course.findByPk(req.params.id)
 
     //verify valid id
     if (!toUpdate) {
@@ -56,7 +56,7 @@ module.exports = app => {
     }
 
     //validation
-    const errors = await validateBody(req.body, models, 'update', toUpdate)
+    const errors = await validateBody(req.body, db, 'update', toUpdate)
     if (errors) {
       return res.status(400).json(error.parse('course-400', generateValidationErrorMessage(errors)))
     }
@@ -73,7 +73,7 @@ module.exports = app => {
   }
 
   api.delete = async (req, res) => {
-    const toDelete = await models.Course.findByPk(req.params.id)
+    const toDelete = await db.Course.findByPk(req.params.id)
 
     //verify valid id
     if (!toDelete) {
@@ -81,15 +81,18 @@ module.exports = app => {
     }
 
     //validação de constraint
-    const errors = await validateDelete(toDelete, models)
+    const errors = await validateDelete(toDelete, db)
     if (errors) {
-      return res.status(400).json(error.parse('graduationLevel-400', generateValidationErrorMessage(errors)))
+      return res.status(403).json(error.parse('graduationLevel-403', generateValidationErrorMessage(errors)))
     }
 
     //try to delete
     try {
-      models.Course.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      db.Course.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
     } catch (e) {
+      if (e.name === 'DeleteAssociatedError') {
+        return res.status(403).json(error.parse('course-403', e))
+      }
       return res.status(500).json(error.parse('course-500', e))
     }
   }

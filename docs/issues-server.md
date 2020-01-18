@@ -1,1 +1,1 @@
-- alterar o nome "models" do sequelize para "db".
+- separar user e auth?

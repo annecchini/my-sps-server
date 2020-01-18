@@ -4,12 +4,12 @@ const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../l
 const { validateBody } = require('../validation/process')
 
 module.exports = app => {
-  const models = app.db.models.index
+  const db = app.db.models.index
   const api = {}
   const error = app.error.process
 
   api.list = (req, res) => {
-    models.GlobalAdmin.findAll({ order: [['createdAt', 'DESC']] }).then(
+    db.GlobalAdmin.findAll({ order: [['createdAt', 'DESC']] }).then(
       toList => {
         return res.json(toList)
       },
@@ -21,14 +21,14 @@ module.exports = app => {
 
   api.create = async (req, res) => {
     //validation
-    const errors = await validateBody(req.body, models, 'create')
+    const errors = await validateBody(req.body, db, 'create')
     if (errors) {
       return res.status(400).json(error.parse('process-400', generateValidationErrorMessage(errors)))
     }
 
     //try to create
     try {
-      const created = await models.Process.create(req.body)
+      const created = await db.Process.create(req.body)
       return res.status(201).json(created)
     } catch (e) {
       return res.status(500).json(error.parse('process-500', e))
@@ -36,7 +36,7 @@ module.exports = app => {
   }
 
   api.read = async (req, res) => {
-    const toRead = await models.Process.findByPk(req.params.id)
+    const toRead = await db.Process.findByPk(req.params.id)
 
     //verify valid id
     if (!toRead) {
@@ -48,7 +48,7 @@ module.exports = app => {
   }
 
   api.update = async (req, res) => {
-    const toUpdate = await models.Process.findByPk(req.params.id)
+    const toUpdate = await db.Process.findByPk(req.params.id)
 
     //verify valid id
     if (!toUpdate) {
@@ -56,7 +56,7 @@ module.exports = app => {
     }
 
     //validation
-    const errors = await validateBody(req.body, models, 'update', toUpdate)
+    const errors = await validateBody(req.body, db, 'update', toUpdate)
     if (errors) {
       return res.status(400).json(error.parse('process-400', generateValidationErrorMessage(errors)))
     }
@@ -73,7 +73,7 @@ module.exports = app => {
   }
 
   api.delete = async (req, res) => {
-    const toDelete = await models.Process.findByPk(req.params.id)
+    const toDelete = await db.Process.findByPk(req.params.id)
 
     //verify valid id
     if (!toDelete) {
@@ -82,8 +82,11 @@ module.exports = app => {
 
     //try to delete
     try {
-      models.Process.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
+      db.Process.destroy({ where: { id: req.params.id } }).then(_ => res.sendStatus(204))
     } catch (e) {
+      if (e.name === 'DeleteAssociatedError') {
+        return res.status(403).json(error.parse('graduationLevel-403', e))
+      }
       return res.status(500).json(error.parse('process-500', e))
     }
   }

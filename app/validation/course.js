@@ -1,6 +1,6 @@
 'use strict'
 
-const validateName = async (value, models, mode, item) => {
+const validateName = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
@@ -10,7 +10,7 @@ const validateName = async (value, models, mode, item) => {
       return 'Este campo é requerido.'
     }
     //value is unique
-    const Courses = await models.Course.findAll({
+    const Courses = await db.Course.findAll({
       where: { name: value }
     })
     if (Courses.length > 0 && mode === 'update' && Courses.find(x => x.id !== item.id)) {
@@ -22,7 +22,7 @@ const validateName = async (value, models, mode, item) => {
   }
 }
 
-const validateGraduationLevelId = async (value, models, mode, item) => {
+const validateGraduationLevelId = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
@@ -32,7 +32,7 @@ const validateGraduationLevelId = async (value, models, mode, item) => {
       return 'Este campo é requerido.'
     }
     //value is on database
-    const GradLevel = await models.GraduationLevel.findOne({
+    const GradLevel = await db.GraduationLevel.findOne({
       where: { id: value }
     })
     if (!GradLevel) {
@@ -41,16 +41,16 @@ const validateGraduationLevelId = async (value, models, mode, item) => {
   }
 }
 
-const validateBody = async (body, models, mode, item) => {
+const validateBody = async (body, db, mode, item) => {
   let error
   const errors = []
 
-  error = await validateName(body.name, models, mode, item)
+  error = await validateName(body.name, db, mode, item)
   if (error) {
     errors.push({ message: error, path: 'name' })
   }
 
-  error = await validateGraduationLevelId(body.graduationLevel_id, models, mode, item)
+  error = await validateGraduationLevelId(body.graduationLevel_id, db, mode, item)
   if (error) {
     errors.push({ message: error, path: 'graduationLevel_id' })
   }

@@ -46,6 +46,9 @@ module.exports = (sequelize, DataTypes) => {
     try {
       await sequelize.models.GlobalAdmin.destroy({ where: { user_id: user.id }, transaction: t })
     } catch (e) {
+      if (e.name === 'DeleteAssociatedError') {
+        e.traceback = `User->${e.traceback}`
+      }
       await t.rollback()
       throw e
     }

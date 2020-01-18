@@ -1,6 +1,6 @@
 'use strict'
 
-const validateName = async (value, models, mode, item) => {
+const validateName = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
@@ -10,7 +10,7 @@ const validateName = async (value, models, mode, item) => {
       return 'Este campo é requerido.'
     }
     //value is unique
-    const GradLevels = await models.GraduationLevel.findAll({
+    const GradLevels = await db.GraduationLevel.findAll({
       where: { name: value }
     })
     if (GradLevels.length > 0 && mode === 'update' && GradLevels.find(x => x.id !== item.id)) {
@@ -22,11 +22,11 @@ const validateName = async (value, models, mode, item) => {
   }
 }
 
-const validateBody = async (body, models, mode, item) => {
+const validateBody = async (body, db, mode, item) => {
   let error
   const errors = []
 
-  error = await validateName(body.name, models, mode, item)
+  error = await validateName(body.name, db, mode, item)
   if (error) {
     errors.push({ message: error, path: 'name' })
   }
