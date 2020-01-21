@@ -1,4 +1,7 @@
 'use strict'
+
+const { validateDelete } = require('../../validation/role')
+
 module.exports = (sequelize, DataTypes) => {
   const Role = sequelize.define(
     'Role',
@@ -19,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       global: {
-        type: DataTypesBOOLEAN,
+        type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false
       }
@@ -33,8 +36,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Role.beforeDestroy(async (role, _) => {
     //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
-    //OPÇÃO 01 - Restringir deleção se estiver associado a um UserRole?
-    //vazio
+    const errors = await validateDelete(role, sequelize.models)
+    if (errors) {
+      throw { name: 'DeleteAssociatedError', traceback: 'Role', errors: errors }
+    }
     //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
     //OPÇÃO 02 - Destruir UserRoles relacionados?
     //vazio

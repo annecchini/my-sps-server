@@ -4,5 +4,6 @@ module.exports = {
   process: '/v1/process',
   user: '/v1/user',
   globalAdmin: '/v1/globaladmin',
-  auth: '/v1/auth'
+  auth: '/v1/auth',
+  role: '/v1/role'
 }

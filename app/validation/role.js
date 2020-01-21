@@ -17,10 +17,10 @@ const validateName = async (value, db, mode, item) => {
       where: { name: value }
     })
     if (role.length > 0 && mode === 'update' && role.find(x => x.id !== item.id)) {
-      return 'Já existe um nível de graduação com esse nome.'
+      return 'Já existe um papel com esse nome.'
     }
     if (role.length > 0 && mode !== 'update') {
-      return 'Já existe um nível de graduação com esse nome.'
+      return 'Já existe um papel com esse nome.'
     }
   }
 }
@@ -51,12 +51,12 @@ const validateBody = async (body, db, mode, item) => {
 
   const descriptionError = await validateDescription(body.description, db, mode, item)
   if (descriptionError) {
-    errors.push({ message: descriptionError, path: 'name' })
+    errors.push({ message: descriptionError, path: 'description' })
   }
 
   const globalError = await validateGlobal(body.global, db, mode, item)
   if (globalError) {
-    errors.push({ message: globalError, path: 'name' })
+    errors.push({ message: globalError, path: 'global' })
   }
 
   return errors.length > 0 ? errors : null
@@ -64,6 +64,14 @@ const validateBody = async (body, db, mode, item) => {
 
 const validateDelete = async (role, models) => {
   const errors = []
+
+  //validate UserRoles constraint
+  const userRoles = await models.UserRole.findAll({
+    where: { role_id: role.id }
+  })
+  if (userRoles.length > 0) {
+    errors.push({ message: 'Este papel está associado a atribuições de papel ativas.', path: 'id' })
+  }
 
   return errors.length > 0 ? errors : null
 }

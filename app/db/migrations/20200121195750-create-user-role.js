@@ -2,29 +2,36 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'Courses',
+      'UserRoles',
       {
         id: {
           type: Sequelize.UUID,
           allowNull: false,
           primaryKey: true
         },
-        graduationLevel_id: {
+        user_id: {
           type: Sequelize.UUID,
           allowNull: false,
           references: {
-            model: 'GraduationLevels',
+            model: 'Users',
             key: 'id'
           }
         },
-        name: {
-          type: Sequelize.STRING,
-          allowNull: false
+        role_id: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          references: {
+            model: 'Roles',
+            key: 'id'
+          }
         },
-        description: {
-          type: Sequelize.STRING,
-          defaultValue: '',
-          allowNull: false
+        course_id: {
+          type: Sequelize.UUID,
+          allowNull: true,
+          references: {
+            model: 'Courses',
+            key: 'id'
+          }
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -46,14 +53,14 @@ module.exports = {
       },
       {
         uniqueKeys: {
-          unique_name_isActive: {
-            fields: ['name', 'isActive']
+          unique_userId_roleId_courseId_isActive: {
+            fields: ['user_id', 'role_id', 'course_id', 'isActive']
           }
         }
       }
     )
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Courses')
+    return queryInterface.dropTable('UserRoles')
   }
 }

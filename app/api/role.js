@@ -9,9 +9,9 @@ module.exports = app => {
   const error = app.error.role
 
   api.list = (req, res) => {
-    db.GraduationLevel.findAll({ order: [['name', 'ASC']] }).then(
-      GraduationLevels => {
-        return res.json(GraduationLevels)
+    db.Role.findAll({ order: [['name', 'ASC']] }).then(
+      Roles => {
+        return res.json(Roles)
       },
       e => {
         return res.status(500).json(error.parse('role-500', e))
@@ -28,7 +28,7 @@ module.exports = app => {
 
     //try to create
     try {
-      const created = await db.GraduationLevel.create(req.body)
+      const created = await db.Role.create(req.body)
       return res.status(201).json(created)
     } catch (e) {
       return res.status(500).json(error.parse('role-500', e))
@@ -36,7 +36,7 @@ module.exports = app => {
   }
 
   api.read = async (req, res) => {
-    const toRead = await db.GraduationLevel.findByPk(req.params.id)
+    const toRead = await db.Role.findByPk(req.params.id)
 
     //verify valid id
     if (!toRead) {
@@ -48,7 +48,7 @@ module.exports = app => {
   }
 
   api.update = async (req, res) => {
-    const toUpdate = await db.GraduationLevel.findByPk(req.params.id)
+    const toUpdate = await db.Role.findByPk(req.params.id)
 
     //verify valid id
     if (!toUpdate) {
@@ -73,7 +73,7 @@ module.exports = app => {
   }
 
   api.delete = async (req, res) => {
-    const toDelete = await db.GraduationLevel.findByPk(req.params.id)
+    const toDelete = await db.Role.findByPk(req.params.id)
 
     //verify valid id
     if (!toDelete) {
@@ -82,7 +82,7 @@ module.exports = app => {
 
     //try to delete
     try {
-      await db.GraduationLevel.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
+      await db.Role.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'DeleteAssociatedError') {
         return res.status(403).json(error.parse('role-403', e))

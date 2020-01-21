@@ -21,7 +21,7 @@ module.exports = {
       user_ids[el.login] = el.id
     }
 
-    //insert Courses on table
+    //insert globalAdmins on table
     return queryInterface.bulkInsert(
       'GlobalAdmins',
       [

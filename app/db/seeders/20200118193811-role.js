@@ -1,26 +1,31 @@
-'use strict';
+'use strict'
+
+const uuid = require('uuid/v4')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
+    //insert roles on table
+    return queryInterface.bulkInsert(
+      'Roles',
+      [
+        {
+          id: uuid(),
+          name: 'Gerente',
+          description: 'Usuário para operar todas as plataformas e recursos gerais da plataforma.',
+          global: true
+        },
+        {
+          id: uuid(),
+          name: 'Coordenador',
+          description: 'Usuário para fazer as oeprações de um curso especifico.',
+          global: false
+        }
+      ],
+      {}
+    )
   },
 
   down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+    return queryInterface.bulkDelete('Roles', null, {})
   }
-};
+}
