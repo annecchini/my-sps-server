@@ -19,7 +19,7 @@ module.exports = {
           allowNull: false
         },
         method: {
-          type: Sequelize.STRING
+          type: Sequelize.ENUM('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH')
         },
         urn: {
           type: Sequelize.STRING
