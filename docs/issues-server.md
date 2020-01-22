@@ -1,0 +1,1 @@
+- Alterar method de string parar enun em permissions
