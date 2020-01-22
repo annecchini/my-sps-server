@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH')
       },
       urn: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       }
     },
     { paranoid: true }

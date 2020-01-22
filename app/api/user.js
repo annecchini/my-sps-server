@@ -1,9 +1,7 @@
 'use strict'
 
-const { idNotFoundErrorMessage, generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../lib/error-helpers')
-const { validateBody, validateAuth, validateAuthorizedAuth } = require('../validation/user')
-const jwt = require('jsonwebtoken')
-const jwtConf = require('../../config/jwt')
+const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
+const { validateBody } = require('../validation/user')
 
 module.exports = app => {
   const db = app.db.models.index
