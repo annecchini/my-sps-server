@@ -2,32 +2,28 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'Permissions',
+      'RolePermissions',
       {
         id: {
           type: Sequelize.UUID,
           allowNull: false,
           primaryKey: true
         },
-        name: {
-          type: Sequelize.STRING,
-          allowNull: false
+        role_id: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          references: {
+            model: 'Roles',
+            key: 'id'
+          }
         },
-        description: {
-          type: Sequelize.TEXT,
-          defaultValue: '',
-          allowNull: false
-        },
-        global: {
-          type: Sequelize.BOOLEAN,
-          defaultValue: false,
-          allowNull: false
-        },
-        method: {
-          type: Sequelize.ENUM('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH')
-        },
-        urn: {
-          type: Sequelize.STRING
+        permission_id: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          references: {
+            model: 'Permissions',
+            key: 'id'
+          }
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -49,14 +45,14 @@ module.exports = {
       },
       {
         uniqueKeys: {
-          unique_name_isActive: {
-            fields: ['name', 'isActive']
+          unique_roleId_permissionId_isActive: {
+            fields: ['role_id', 'permission_id', 'isActive']
           }
         }
       }
     )
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Permissions')
+    return queryInterface.dropTable('RolePermissions')
   }
 }

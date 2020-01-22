@@ -5,5 +5,8 @@ module.exports = {
   user: '/v1/user',
   globalAdmin: '/v1/globaladmin',
   auth: '/v1/auth',
-  role: '/v1/role'
+  role: '/v1/role',
+  userRole: '/v1/userrole',
+  permission: '/v1/permission',
+  rolePermission: '/v1/rolepermission'
 }

@@ -18,8 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '',
         allowNull: false
       },
+      global: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
+      },
       method: {
-        type: Sequelize.STRING
+        type: DataTypes.ENUM('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH')
       },
       urn: {
         type: Sequelize.STRING
