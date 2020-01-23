@@ -90,7 +90,7 @@ module.exports = app => {
     try {
       db.Course.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
-      if (e.name === 'DeleteAssociatedError') {
+      if (e.name === 'ForbbidenDeletionError') {
         return res.status(403).json(error.parse('course-403', e))
       }
       return res.status(500).json(error.parse('course-500', e))

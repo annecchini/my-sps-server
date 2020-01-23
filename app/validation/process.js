@@ -67,39 +67,19 @@ const validateDescription = (value, db, mode, item) => {
 }
 
 const validateUniqueIdentifierYear = async (body, db, mode, item, identifierError, yearError) => {
-  if (mode === 'create') {
-    if (!identifierError && !yearError) {
-      const Processes = await db.Process.findAll({
-        where: { identifier: body.identifier, year: body.year }
-      })
-      if (Processes.length > 0) {
-        const uniqueErrorIdentifier = { message: 'A combinação identificador/ano deve ser única.', path: 'identifier' }
-        const uniqueErrorYear = { message: 'A combinação identificador/ano deve ser única.', path: 'year' }
-        return [uniqueErrorIdentifier, uniqueErrorYear]
-      }
-    }
-  }
-  if (mode === 'update') {
-    const canUseBodyIdentifier = body.identifier && !identifierError ? true : false
-    const canUseBodyYear = body.year && !yearError ? true : false
+  if (!identifierError && !yearError) {
+    //Decidir se vai ignorar propria id
+    const whereIgnoreOwnId = mode === 'update' ? { id: { [db.Sequelize.Op.not]: item.id } } : {}
 
-    let Processes = []
-    let where = null
+    //Decidir se vai usar body.identifier ou item.identifier
+    const whereIdentifier = body.identifier ? { identifier: body.identifier } : { identifier: item.identifier }
 
-    if (canUseBodyIdentifier && canUseBodyYear) {
-      where = { identifier: body.identifier, year: body.year }
-    } else if (canUseBodyIdentifier && !yearError) {
-      where = { identifier: body.identifier, year: item.year }
-    } else if (canUseBodyYear && !identifierError) {
-      where = { identifier: item.identifier, year: body.year }
-    }
-    if (where) {
-      Processes = await db.Process.findAll({ where: where })
-    }
-    if (Processes.length > 0 && Processes.find(x => x.id !== item.id)) {
-      const uniqueErrorIdentifier = { message: 'A combinação identificador/ano deve ser única.', path: 'identifier' }
-      const uniqueErrorYear = { message: 'A combinação identificador/ano deve ser única.', path: 'year' }
-      return [uniqueErrorIdentifier, uniqueErrorYear]
+    //Decidir se vai usar body.year ou item.year
+    const whereYear = body.year ? { year: body.year } : { year: item.year }
+
+    processes = await db.Process.findAll({ where: { ...whereIdentifier, ...whereYear, ...whereIgnoreOwnId } })
+    if (processes.length > 0) {
+      return 'Essa combinação de identificador-ano já existe.'
     }
   }
 }
@@ -132,9 +112,9 @@ const validateBody = async (body, db, mode, item) => {
     errors.push({ message: descriptionError, path: 'description' })
   }
 
-  const uniqueIdentifierYearErrors = await validateUniqueIdentifierYear(body, db, mode, item, identifierError, yearError)
-  if (uniqueIdentifierYearErrors) {
-    errors = errors.concat(uniqueIdentifierYearErrors)
+  const uniqueIdentifierYearError = await validateUniqueIdentifierYear(body, db, mode, item, identifierError, yearError)
+  if (uniqueIdentifierYearError) {
+    errors.push({ message: uniqueIdentifierYearError, path: 'id' })
   }
 
   return errors.length > 0 ? errors : null

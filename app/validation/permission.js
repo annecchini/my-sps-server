@@ -1,26 +1,24 @@
 'use strict'
 
+const Validator = require('validator')
+
 const validateName = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
   }
-
-  //value is not empty
+  //value is valid
   if (typeof value !== 'undefined' && (value === null || value === '')) {
     return 'Este campo é requerido.'
   }
-
   //value is unique
   if (typeof value !== 'undefined') {
-    const role = await db.Role.findAll({
-      where: { name: value }
+    const whereIgnoreOwnId = mode === 'update' ? { id: { [db.Sequelize.Op.not]: item.id } } : {}
+    const permissions = await db.Permission.findAll({
+      where: { name: value, ...whereIgnoreOwnId }
     })
-    if (role.length > 0 && mode === 'update' && role.find(x => x.id !== item.id)) {
-      return 'Já existe um papel com esse nome.'
-    }
-    if (role.length > 0 && mode !== 'update') {
-      return 'Já existe um papel com esse nome.'
+    if (permissions.length > 0) {
+      return 'Já existe uma permissão com esse nome.'
     }
   }
 }
@@ -37,48 +35,58 @@ const validateGlobal = (value, db, mode, item) => {
   if (typeof value !== 'undefined' && (value === '' || (value != true && value != false))) {
     return 'Formato inválido.'
   }
-
-  //update (valor = false) mas o role possui permissões globais (se eu criar permissões com tipo)
 }
 
+const validateMethod = (value, db, mode, item) => {
+  //value é um dos valores permitidos.
+  const methods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
+  if (typeof value !== 'undefined' && !Validator.isIn(value, methods)) {
+    return 'Se for declarado, deve ser um method válido.'
+  }
+}
+
+const validateUrn = (value, db, mode, item) => {}
+
 const validateBody = async (body, db, mode, item) => {
-  const errors = []
+  let errors = []
 
   const nameError = await validateName(body.name, db, mode, item)
   if (nameError) {
     errors.push({ message: nameError, path: 'name' })
   }
 
-  const descriptionError = await validateDescription(body.description, db, mode, item)
+  const descriptionError = validateDescription(body.role_id, db, mode, item)
   if (descriptionError) {
     errors.push({ message: descriptionError, path: 'description' })
   }
 
-  const globalError = await validateGlobal(body.global, db, mode, item)
+  const globalError = validateGlobal(body.global, db, mode, item)
   if (globalError) {
     errors.push({ message: globalError, path: 'global' })
+  }
+
+  const methodError = validateMethod(body.global, db, mode, item)
+  if (methodError) {
+    errors.push({ message: methodError, path: 'method' })
+  }
+
+  const urnError = validateUrn(body.global, db, mode, item)
+  if (urnError) {
+    errors.push({ message: urnError, path: 'urn' })
   }
 
   return errors.length > 0 ? errors : null
 }
 
-const validateDelete = async (role, models) => {
+const validateDelete = async (permission, models) => {
   const errors = []
-
-  //validate UserRoles constraint
-  const userRoles = await models.UserRole.findAll({
-    where: { role_id: role.id }
-  })
-  if (userRoles.length > 0) {
-    errors.push({ message: 'Este papel está associado a atribuições de papel ativas.', path: 'id' })
-  }
 
   //validate RolePermissions constraint
   const rolePermissions = await models.RolePermission.findAll({
-    where: { role_id: role.id }
+    where: { permission_id: permission.id }
   })
   if (rolePermissions.length > 0) {
-    errors.push({ message: 'Este papel está associado a atribuições de permissão ativas.', path: 'id' })
+    errors.push({ message: 'Esta permissão está associada a papeis ativos.', path: 'id' })
   }
 
   return errors.length > 0 ? errors : null

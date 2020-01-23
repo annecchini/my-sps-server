@@ -84,7 +84,7 @@ module.exports = app => {
     try {
       await db.Role.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
-      if (e.name === 'DeleteAssociatedError') {
+      if (e.name === 'ForbbidenDeletionError') {
         return res.status(403).json(error.parse('role-403', e))
       }
       return res.status(500).json(error.parse('role-500', e))

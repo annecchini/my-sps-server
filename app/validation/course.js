@@ -69,6 +69,14 @@ const validateDelete = async (course, models) => {
     errors.push({ message: 'Este curso está associado a processos ativos.', path: 'id' })
   }
 
+  //validate UserRoles constraint
+  const userRoles = await models.UserRole.findAll({
+    where: { course_id: course.id }
+  })
+  if (userRoles.length > 0) {
+    errors.push({ message: 'Este curso está associado a atribuições de papel ativas.', path: 'id' })
+  }
+
   return errors.length > 0 ? errors : null
 }
 

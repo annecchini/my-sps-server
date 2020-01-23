@@ -65,4 +65,18 @@ const validateBody = async (body, db, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody }
+const validateDelete = async (user, models) => {
+  const errors = []
+
+  //validate UserRoles constraint
+  const userRoles = await models.UserRole.findAll({
+    where: { user_id: user.id }
+  })
+  if (userRoles.length > 0) {
+    errors.push({ message: 'Este usuário está associado a atribuições de papel ativas.', path: 'id' })
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody, validateDelete }

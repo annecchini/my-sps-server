@@ -2,6 +2,8 @@
 
 const bcrypt = require('bcrypt')
 
+const { validateDelete } = require('../../validation/user')
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -40,14 +42,17 @@ module.exports = (sequelize, DataTypes) => {
   User.beforeDestroy(async (user, _) => {
     //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
     //vazio
-
+    const errors = await validateDelete(user, sequelize.models)
+    if (errors) {
+      throw { name: 'ForbbidenDeletionError', traceback: 'User', errors: errors }
+    }
     //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
     const t = await sequelize.transaction()
     try {
       await sequelize.models.GlobalAdmin.destroy({ where: { user_id: user.id }, transaction: t })
     } catch (e) {
       await t.rollback()
-      if (e.name === 'DeleteAssociatedError') {
+      if (e.name === 'ForbbidenDeletionError') {
         e.traceback = `User->${e.traceback}`
       }
       throw e

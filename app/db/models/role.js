@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
     const errors = await validateDelete(role, sequelize.models)
     if (errors) {
-      throw { name: 'DeleteAssociatedError', traceback: 'Role', errors: errors }
+      throw { name: 'ForbbidenDeletionError', traceback: 'Role', errors: errors }
     }
     //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
     //OPÇÃO 02 - Destruir UserRoles relacionados?
