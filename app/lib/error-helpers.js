@@ -24,6 +24,20 @@ const invalidRequestErrorMessage = error => {
   }
 }
 
+const invalidUrlErrorMessage = req => {
+  return {
+    name: 'ValidationError',
+    errors: [
+      {
+        message: `Página não encontrada.`,
+        path: 'request',
+        method: req.method,
+        url: req.url
+      }
+    ]
+  }
+}
+
 const generateValidationErrorMessage = errors => {
   return {
     name: 'ValidationError',
@@ -42,5 +56,6 @@ module.exports = {
   idNotFoundErrorMessage,
   generateValidationErrorMessage,
   invalidRequestErrorMessage,
+  invalidUrlErrorMessage,
   generateUnauthorizedErrorMessage
 }
