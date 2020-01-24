@@ -9,7 +9,7 @@ module.exports = app => {
   const error = app.error.rolePermission
 
   api.list = (req, res) => {
-    db.RolePermission.findAll({ order: [['createdAt', 'ASC']] }).then(
+    db.RolePermission.findAll({ order: [['createdAt', 'DESC']] }).then(
       toList => {
         return res.json(toList)
       },

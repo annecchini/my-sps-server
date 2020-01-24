@@ -1,0 +1,1435 @@
+{
+	"info": {
+		"_postman_id": "29d1cfb3-b979-46e4-8376-06d13ff184ba",
+		"name": "my-sps",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/v1/user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\":\"fernando4@teste.br\",\n\t\"password\":\"senhafraca123\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/user/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/user/2bf8e033-8a14-4864-ba04-eae0da6cf66f",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"user",
+								"2bf8e033-8a14-4864-ba04-eae0da6cf66f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/user/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\": \"admin2@ufes.br\",\n\t\"password\":\"senhafraca123\",\n\t\"authorized\":true\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/user/2a4fa910-f945-40de-bb0e-52855e760d6b",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"user",
+								"2a4fa910-f945-40de-bb0e-52855e760d6b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/user/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/user/76340532-18b0-4411-97c9-9b4384202e10",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"user",
+								"76340532-18b0-4411-97c9-9b4384202e10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/v1/user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\":\"fernando4@teste.br\",\n\t\"password\":\"senhafraca123\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "graduationlevel",
+			"item": [
+				{
+					"name": "/v1/graduationlevel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/graduationlevel",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"graduationlevel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/graduationlevel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"xxx32454354\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/graduationlevel",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"graduationlevel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/graduationlevel/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/graduationlevel/ff417c1a-f27c-48ac-a84a-5c0acae5214a",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"graduationlevel",
+								"ff417c1a-f27c-48ac-a84a-5c0acae5214a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/graduationlevel/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"xxx32454354-alterado\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/graduationlevel/ff417c1a-f27c-48ac-a84a-5c0acae5214a",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"graduationlevel",
+								"ff417c1a-f27c-48ac-a84a-5c0acae5214a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/graduationlevel/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/v1/graduationlevel/0abb4550-3b98-46e1-8ad5-2f6f4ec80df7",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"graduationlevel",
+								"0abb4550-3b98-46e1-8ad5-2f6f4ec80df7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2a8c7538-8102-4145-9874-1d652d1277fc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "371942bd-30bd-488e-8fa9-7340b1f9f3dd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "course",
+			"item": [
+				{
+					"name": "/v1/course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/course",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Testando criação de curso\",\n\t\"graduationLevel_id\":\"9ab55afe-93c9-4bad-8a7e-3bc4e9c5506c\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/course",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/course/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/course/863b8f1a-566d-4f01-af3d-153fe6aba479",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"course",
+								"863b8f1a-566d-4f01-af3d-153fe6aba479"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/course/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"863b8f1a-566d-4f01-af3d-153fe6aba479\",\n\t\"description\":\"ok\",\n\t\"graduationLevel_id\":\"9ab55afe-93c9-4bad-8a7e-3bc4e9c5506c\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/course/863b8f1a-566d-4f01-af3d-153fe6aba479",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"course",
+								"863b8f1a-566d-4f01-af3d-153fe6aba479"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/course/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/course/84504068-9037-43c4-8f95-40c469ccf467",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"course",
+								"84504068-9037-43c4-8f95-40c469ccf467"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "process",
+			"item": [
+				{
+					"name": "/v1/process",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/process",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/process",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"asdasd\":\"Estagio SEAD 10\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/process",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/process/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/process/a7f6be0c-147f-4803-b431-f26a225ddd5a",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"process",
+								"a7f6be0c-147f-4803-b431-f26a225ddd5a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/process/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"year\":\"2001\",\n\t\"visible\":true\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/process/a7f6be0c-147f-4803-b431-f26a225ddd5a",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"process",
+								"a7f6be0c-147f-4803-b431-f26a225ddd5a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/process/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/process/863b8f1a-566d-4f01-af3d-153fe6aba479",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"process",
+								"863b8f1a-566d-4f01-af3d-153fe6aba479"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "globaladmin",
+			"item": [
+				{
+					"name": "/v1/globaladmin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/globaladmin",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"globaladmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/globaladmin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\":\"dbf0e511-af57-4b3a-bf9c-5394d665d14f\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/globaladmin",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"globaladmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/globaladmin/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/globaladmin/711b6974-b3eb-45c4-8451-bfaa15af71e4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"globaladmin",
+								"711b6974-b3eb-45c4-8451-bfaa15af71e4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/globaladmin/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\": \"dbf0e511-af57-4b3a-bf9c-5394d665d14f3\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/globalAdmin/711b6974-b3eb-45c4-8451-bfaa15af71e4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"globalAdmin",
+								"711b6974-b3eb-45c4-8451-bfaa15af71e4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/globaladmin/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/globaladmin/711b6974-b3eb-45c4-8451-bfaa15af71e4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"globaladmin",
+								"711b6974-b3eb-45c4-8451-bfaa15af71e4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "/v1/role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/role",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"teste\",\n\t\"description\":\"\",\n\t\"global\":true\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/role",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/role/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/role/808411cb-d6b8-4924-9967-4702c5a6b0f5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"role",
+								"808411cb-d6b8-4924-9967-4702c5a6b0f5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/role/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"teste2\",\n\t\"description\":\"ok\",\n\t\"global\":false\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/role/808411cb-d6b8-4924-9967-4702c5a6b0f5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"role",
+								"808411cb-d6b8-4924-9967-4702c5a6b0f5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/role/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/role/808411cb-d6b8-4924-9967-4702c5a6b0f5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"role",
+								"808411cb-d6b8-4924-9967-4702c5a6b0f5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "userrole",
+			"item": [
+				{
+					"name": "/v1/userrole",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/userrole",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"userrole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/userrole",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\":\"fd594c9d-8419-4308-bdf8-b1a8cd73b982\",\n\t\"role_id\":\"0bada733-dfed-4bb6-857f-704309f3965a\",\n\t\"course_id\":\"084486c8-e047-4d0c-8840-eeaa5ba6bd11\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/userrole",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"userrole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/userrole/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/userrole/3b3f7d6d-da90-4a66-8d01-7ac1bb512d15",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"userrole",
+								"3b3f7d6d-da90-4a66-8d01-7ac1bb512d15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/userrole/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\": \"c39a5ec7-5763-4181-931e-43e1fdfc6914\",\n\t\"role_id\": \"b533013c-5806-46cc-af68-4e4f20472949\",\n\t\"course_id\":null\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/userrole/3b3f7d6d-da90-4a66-8d01-7ac1bb512d15",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"userrole",
+								"3b3f7d6d-da90-4a66-8d01-7ac1bb512d15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/userrole/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/userrole/f0bf9386-8716-40fb-ada2-a4f5021560a6",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"userrole",
+								"f0bf9386-8716-40fb-ada2-a4f5021560a6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "permission",
+			"item": [
+				{
+					"name": "/v1/permission",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/permission",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"permission"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/permission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"banana\",\n\t\"description\":\"\",\n\t\"global\":false,\n\t\"method\":null,\n\t\"urn\":null\n\t\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/permission",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"permission"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/permission/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/permission/472a02e0-fcf9-44e1-81b8-38a986ff1ada",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"permission",
+								"472a02e0-fcf9-44e1-81b8-38a986ff1ada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/permission/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"banana3\",\n\t\"description\":\"\",\n\t\"global\":false,\n\t\"method\":null,\n\t\"urn\":null\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/permission/472a02e0-fcf9-44e1-81b8-38a986ff1ada",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"permission",
+								"472a02e0-fcf9-44e1-81b8-38a986ff1ada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/permission/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/permission/472a02e0-fcf9-44e1-81b8-38a986ff1ada",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"permission",
+								"472a02e0-fcf9-44e1-81b8-38a986ff1ada"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "rolePermission",
+			"item": [
+				{
+					"name": "/v1/rolepermission",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/rolepermission",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"rolepermission"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/rolepermission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"role_id\":\"08b7a952-3144-4ae6-8b7f-397c4b493ef2\",\n\t\"permission_id\":\"b927370b-95c6-49b4-bd93-c4a14c060a24\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/rolepermission",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"rolepermission"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/rolepermission/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/rolepermission/fb481738-f8e3-4d79-a0ef-1c4225628ef7",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"rolepermission",
+								"fb481738-f8e3-4d79-a0ef-1c4225628ef7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/rolepermission/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"role_id\":\"a1aa1338-aa6d-449b-ac78-15daf6d33bdf\",\n\t\"permission_id\":\"fdb0e126-2691-484b-a71c-acbc6f5f5896\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/rolepermission/fb481738-f8e3-4d79-a0ef-1c4225628ef7",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"rolepermission",
+								"fb481738-f8e3-4d79-a0ef-1c4225628ef7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/rolepermission/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/rolepermission/fb481738-f8e3-4d79-a0ef-1c4225628ef7",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"rolepermission",
+								"fb481738-f8e3-4d79-a0ef-1c4225628ef7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	]
+}

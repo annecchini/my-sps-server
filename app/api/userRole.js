@@ -9,7 +9,7 @@ module.exports = app => {
   const error = app.error.userRole
 
   api.list = (req, res) => {
-    db.UserRole.findAll({ order: [['createdAt', 'ASC']] }).then(
+    db.UserRole.findAll({ order: [['createdAt', 'DESC']] }).then(
       toList => {
         return res.json(toList)
       },

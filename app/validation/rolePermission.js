@@ -35,7 +35,7 @@ const validatePermissionId = async (value, db, mode, item) => {
   if (typeof value !== 'undefined') {
     const permission = await db.Permission.findOne({ where: { id: value } })
     if (!permission) {
-      return 'O usuário não existe.'
+      return 'A permissão não existe.'
     }
   }
 }
@@ -71,9 +71,9 @@ const validateBody = async (body, db, mode, item) => {
     errors.push({ message: roleIdError, path: 'role_id' })
   }
 
-  const permissionIdError = await validatePermissionId(body.user_id, db, mode, item)
+  const permissionIdError = await validatePermissionId(body.permission_id, db, mode, item)
   if (permissionIdError) {
-    errors.push({ message: permissionIdError, path: 'user_id' })
+    errors.push({ message: permissionIdError, path: 'permission_id' })
   }
 
   const uniqueError = await validateUniqueRoleIdPermissionId(body, db, mode, item, roleIdError, permissionIdError)
