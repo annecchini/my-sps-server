@@ -1,1 +1,1 @@
-- Alterar method de string parar enun em permissions
+- seria possivel capturar o erro de url não encontrada no express?

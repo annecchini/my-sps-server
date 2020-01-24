@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true
       }
     },
-    { paranoid: true }
+    { paranoid: true, timestamps: true }
   )
 
   UserRole.associate = function(models) {

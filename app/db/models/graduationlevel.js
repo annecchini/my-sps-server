@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     },
-    { paranoid: true }
+    { paranoid: true, timestamps: true }
   )
 
   GraduationLevel.beforeDestroy(async (graduationLevel, _) => {

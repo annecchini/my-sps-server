@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     },
-    { paranoid: true }
+    { paranoid: true, timestamps: true }
   )
 
   User.associate = function(models) {

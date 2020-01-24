@@ -82,7 +82,7 @@ module.exports = app => {
 
     //try to delete
     try {
-      db.UserRole.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
+      await db.UserRole.destroy({ where: { id: req.params.id }, individualHooks: true }).then(_ => res.sendStatus(204))
     } catch (e) {
       if (e.name === 'ForbbidenDeletionError') {
         return res.status(403).json(error.parse('userRole-403', e))

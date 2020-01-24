@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     },
-    { paranoid: true }
+    { paranoid: true, timestamps: true }
   )
 
   Process.associate = function(models) {

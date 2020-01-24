@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING
       }
     },
-    { paranoid: true }
+    { paranoid: true, timestamps: true }
   )
 
   Permission.associate = function(models) {

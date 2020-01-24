@@ -40,7 +40,7 @@ const validateGlobal = (value, db, mode, item) => {
 const validateMethod = (value, db, mode, item) => {
   //value é um dos valores permitidos.
   const methods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
-  if (typeof value !== 'undefined' && !Validator.isIn(value, methods)) {
+  if (typeof value !== 'undefined' && value !== null && !Validator.isIn(value, methods)) {
     return 'Se for declarado, deve ser um method válido.'
   }
 }
@@ -55,7 +55,7 @@ const validateBody = async (body, db, mode, item) => {
     errors.push({ message: nameError, path: 'name' })
   }
 
-  const descriptionError = validateDescription(body.role_id, db, mode, item)
+  const descriptionError = validateDescription(body.description, db, mode, item)
   if (descriptionError) {
     errors.push({ message: descriptionError, path: 'description' })
   }
@@ -65,12 +65,12 @@ const validateBody = async (body, db, mode, item) => {
     errors.push({ message: globalError, path: 'global' })
   }
 
-  const methodError = validateMethod(body.global, db, mode, item)
+  const methodError = validateMethod(body.method, db, mode, item)
   if (methodError) {
     errors.push({ message: methodError, path: 'method' })
   }
 
-  const urnError = validateUrn(body.global, db, mode, item)
+  const urnError = validateUrn(body.urn, db, mode, item)
   if (urnError) {
     errors.push({ message: urnError, path: 'urn' })
   }

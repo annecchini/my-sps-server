@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING
       }
     },
-    { paranoid: true }
+    { paranoid: true, timestamps: true }
   )
 
   Course.associate = function(models) {
