@@ -7,10 +7,12 @@ const validateName = async (value, db, mode, item) => {
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
   }
+
   //value is valid
   if (typeof value !== 'undefined' && (value === null || value === '')) {
     return 'Este campo é requerido.'
   }
+
   //value is unique
   if (typeof value !== 'undefined') {
     const whereIgnoreOwnId = mode === 'update' ? { id: { [db.Sequelize.Op.not]: item.id } } : {}
