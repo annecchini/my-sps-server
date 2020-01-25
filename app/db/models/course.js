@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Course.associate = function(models) {
     Course.belongsTo(models.GraduationLevel, { foreignKey: 'graduationLevel_id' })
+    Course.hasMany(models.UserRole, { foreignKey: 'course_id' })
   }
 
   Course.beforeDestroy(async (course, _) => {

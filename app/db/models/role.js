@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
   )
 
   Role.associate = function(models) {
-    // associations can be defined here
+    Role.hasMany(models.UserRole, { foreignKey: 'role_id' })
+    Role.hasMany(models.RolePermission, { foreignKey: 'role_id' })
   }
 
   Role.beforeDestroy(async (role, _) => {

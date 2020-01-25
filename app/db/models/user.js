@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
   )
 
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.GlobalAdmin, { foreignKey: 'user_id' })
+    User.hasMany(models.UserRole, { foreignKey: 'user_id' })
   }
 
   User.prototype.validPassword = async function(password) {

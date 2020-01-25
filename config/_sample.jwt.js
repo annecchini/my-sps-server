@@ -1,9 +1,4 @@
 module.exports = {
-  secrets: [
-    {
-      key: 'jwt_secret',
-      value: 'XyXyXyXy'
-    }
-  ],
+  jwt_secret: 'XyXyXyXy',
   options: { expiresIn: '6h' }
 }

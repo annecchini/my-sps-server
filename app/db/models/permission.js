@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   )
 
   Permission.associate = function(models) {
-    // associations can be defined here
+    Permission.hasMany(models.RolePermission, { foreignKey: 'permission_id' })
   }
 
   Permission.beforeDestroy(async (permission, _) => {
