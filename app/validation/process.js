@@ -120,4 +120,18 @@ const validateBody = async (body, db, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody }
+const validateDelete = async (process, models) => {
+  const errors = []
+
+  //validate ProcessAssignments constraint
+  const processAssignments = await models.ProcessAssignment.findAll({
+    where: { process_id: process.id }
+  })
+  if (processAssignments.length > 0) {
+    errors.push({ message: 'Este processo está associado a atribuições de cargo ativas.', path: 'id' })
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody, validateDelete }

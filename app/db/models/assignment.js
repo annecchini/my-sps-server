@@ -1,4 +1,7 @@
 'use strict'
+
+const { validateDelete } = require('../../validation/assignment')
+
 module.exports = (sequelize, DataTypes) => {
   const Assignment = sequelize.define(
     'Assignment',

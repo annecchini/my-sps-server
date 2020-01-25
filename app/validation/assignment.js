@@ -39,12 +39,12 @@ const validateDelete = async (assignment, models) => {
   const errors = []
 
   //validate processAssignments constraint
-  // const processAssignments = await models.ProcessAssignment.findAll({
-  //   where: { assignment_id: assignment.id }
-  // })
-  // if (processAssignments.length > 0) {
-  //   errors.push({ message: 'Este cargo está associado a atribuição de cargo ativas.', path: 'id' })
-  // }
+  const processAssignments = await models.ProcessAssignment.findAll({
+    where: { assignment_id: assignment.id }
+  })
+  if (processAssignments.length > 0) {
+    errors.push({ message: 'Este cargo está associado a atribuições de cargo ativas.', path: 'id' })
+  }
 
   return errors.length > 0 ? errors : null
 }

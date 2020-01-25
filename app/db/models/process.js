@@ -1,4 +1,7 @@
 'use strict'
+
+const { validateDelete } = require('../../validation/process')
+
 module.exports = (sequelize, DataTypes) => {
   const Process = sequelize.define(
     'Process',
@@ -34,6 +37,17 @@ module.exports = (sequelize, DataTypes) => {
   Process.associate = function(models) {
     Process.belongsTo(models.Course, { foreignKey: 'course_id' })
   }
+
+  Process.beforeDestroy(async (process, _) => {
+    //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
+    const errors = await validateDelete(process, sequelize.models)
+    if (errors) {
+      throw { name: 'ForbbidenDeletionError', traceback: 'Process', errors: errors }
+    }
+
+    //operações em modelos relacionados (onDelete:'CASCADE' ou 'SET NULL')
+    //vazio
+  })
 
   Process.prototype.toJSON = function() {
     let values = Object.assign({}, this.get())
