@@ -8,4 +8,8 @@
 
 # GlobalAdmin
 
-Usar findOrCreate ou só create? (Está create por enquanto.)
+- Usar findOrCreate ou só create? (Está create por enquanto.)
+
+# Usar contexto no sistema de permissões?
+
+- ???

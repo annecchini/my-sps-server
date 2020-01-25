@@ -14,7 +14,7 @@ const idNotFoundErrorMessage = () => {
 
 const invalidRequestErrorMessage = error => {
   return {
-    name: 'ValidationError',
+    name: 'RequestError',
     errors: [
       {
         message: `Requisição inválida. (${error.message})`,
@@ -26,7 +26,7 @@ const invalidRequestErrorMessage = error => {
 
 const invalidUrlErrorMessage = req => {
   return {
-    name: 'ValidationError',
+    name: 'RequestError',
     errors: [
       {
         message: `Página não encontrada.`,

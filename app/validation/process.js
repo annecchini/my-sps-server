@@ -5,11 +5,11 @@ const validateIdentifier = (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
-  } else if (typeof value !== 'undefined') {
-    //value is valid
-    if (value === null || value === '') {
-      return 'Este campo é requerido.'
-    }
+  }
+
+  //value is valid
+  if (typeof value !== 'undefined' && (value === null || value === '')) {
+    return 'Este campo é requerido.'
   }
 }
 
@@ -17,15 +17,16 @@ const validateYear = (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
-  } else if (typeof value !== 'undefined') {
-    //value is valid
-    if (value === null || value === '') {
-      return 'Este campo é requerido.'
-    }
-    //value is a year
-    if (!Validator.matches(value, /^\d{4}$/)) {
-      return 'Formato inválido. Deve ser um ano no formato AAAA'
-    }
+  }
+
+  //value is not empty
+  if (typeof value !== 'undefined' && (value === null || value === '')) {
+    return 'Este campo é requerido.'
+  }
+
+  //value is a year
+  if (typeof value !== 'undefined' && !Validator.matches(value, /^\d{4}$/)) {
+    return 'Formato inválido. Deve ser um ano no formato AAAA'
   }
 }
 
@@ -33,24 +34,27 @@ const validateCourseId = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
     return 'Este campo é necessário.'
-  } else if (typeof value !== 'undefined') {
-    //value is valid
-    if (value === null || value === '') {
-      return 'Este campo é requerido.'
-    }
-    //value is on database
-    const Course = await db.Course.findOne({
+  }
+
+  //value is not empty
+  if (typeof value !== 'undefined' && (value === null || value === '')) {
+    return 'Este campo é requerido.'
+  }
+
+  //value is on database
+  if (typeof value !== 'undefined') {
+    const course = await db.Course.findOne({
       where: { id: value }
     })
-    if (!Course) {
+    if (!course) {
       return 'O curso não existe na base de dados.'
     }
   }
 }
 
 const validateVisible = (value, db, mode, item) => {
+  //value is booblean
   if (typeof value !== 'undefined') {
-    //value is booblean
     if ((value != true && value != false) || value === '') {
       return 'Formato inválido.'
     }
@@ -58,11 +62,9 @@ const validateVisible = (value, db, mode, item) => {
 }
 
 const validateDescription = (value, db, mode, item) => {
-  if (typeof value !== 'undefined') {
-    //value is not null
-    if (value === null) {
-      return 'Este campo não pode ser nulo.'
-    }
+  //value is not null
+  if (typeof value !== 'undefined' && value === null) {
+    return 'Este campo não pode ser nulo.'
   }
 }
 
@@ -77,7 +79,7 @@ const validateUniqueIdentifierYear = async (body, db, mode, item, identifierErro
     //Decidir se vai usar body.year ou item.year
     const whereYear = body.year ? { year: body.year } : { year: item.year }
 
-    processes = await db.Process.findAll({ where: { ...whereIdentifier, ...whereYear, ...whereIgnoreOwnId } })
+    const processes = await db.Process.findAll({ where: { ...whereIdentifier, ...whereYear, ...whereIgnoreOwnId } })
     if (processes.length > 0) {
       return 'Essa combinação de identificador-ano já existe.'
     }

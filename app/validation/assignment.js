@@ -14,7 +14,7 @@ const validateName = async (value, db, mode, item) => {
   //value is unique
   if (typeof value !== 'undefined') {
     const whereIgnoreOwnId = mode === 'update' ? { id: { [db.Sequelize.Op.not]: item.id } } : {}
-    const assignments = await db.Assigment.findAll({
+    const assignments = await db.Assignment.findAll({
       where: { name: value, ...whereIgnoreOwnId }
     })
     if (assignments.length > 0) {

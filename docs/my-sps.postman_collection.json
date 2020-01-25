@@ -164,7 +164,7 @@
 			"name": "auth",
 			"item": [
 				{
-					"name": "/v1/user",
+					"name": "/v1/auth",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -537,7 +537,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"asdasd\":\"Estagio SEAD 10\"\n}"
+							"raw": "{\n\t\"identifier\":\"001\",\n\t\"year\":\"2019\",\n\t\"course_id\":\"6be5507a-3c82-4539-a46a-d0b8af092092\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/v1/process",
@@ -1401,6 +1401,316 @@
 								"v1",
 								"rolepermission",
 								"fb481738-f8e3-4d79-a0ef-1c4225628ef7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "assignment",
+			"item": [
+				{
+					"name": "/v1/assignment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/assignment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"assignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/assignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Banana\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/assignment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"assignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/assignment/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/assignment/3dfda9c1-2b1d-41dc-be3c-b26c3561db95",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"assignment",
+								"3dfda9c1-2b1d-41dc-be3c-b26c3561db95"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/assignment/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Banana2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/assignment/3dfda9c1-2b1d-41dc-be3c-b26c3561db95",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"assignment",
+								"3dfda9c1-2b1d-41dc-be3c-b26c3561db95"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/assignment/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/assignment/3dfda9c1-2b1d-41dc-be3c-b26c3561db95",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"assignment",
+								"3dfda9c1-2b1d-41dc-be3c-b26c3561db95"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "023066c3-38d5-4715-b0ba-6a11dc1e6cb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "94aeab36-7c89-4e43-bb05-a8038e46786b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "processAssignment",
+			"item": [
+				{
+					"name": "/v1/processassignment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/processassignment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"processassignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/processassignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"process_id\":\"00187e62-f63e-4e55-9939-538a93dfc91d\",\n\t\"assignment_id\":\"ce5c89a9-b2ae-47fb-9ea1-28788a179444\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/processassignment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"processassignment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/processassignment/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/v1/processassignment/99fbf0ca-5500-4fa3-bdfc-00b6586e1633",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"processassignment",
+								"99fbf0ca-5500-4fa3-bdfc-00b6586e1633"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/processassignment/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"process_id\": \"00187e62-f63e-4e55-9939-538a93dfc91d\",\n    \"assignment_id\": \"c167cbea-a4ae-4545-a6ea-44093822f136\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/v1/processassignment/99fbf0ca-5500-4fa3-bdfc-00b6586e1633",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"processassignment",
+								"99fbf0ca-5500-4fa3-bdfc-00b6586e1633"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/processassignment/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/v1/processassignment/99fbf0ca-5500-4fa3-bdfc-00b6586e1633",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"processassignment",
+								"99fbf0ca-5500-4fa3-bdfc-00b6586e1633"
 							]
 						}
 					},

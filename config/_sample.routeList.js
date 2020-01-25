@@ -9,5 +9,6 @@ module.exports = {
   userRole: '/v1/userrole',
   permission: '/v1/permission',
   rolePermission: '/v1/rolepermission',
-  assignment: '/v1/assignment'
+  assignment: '/v1/assignment',
+  processAssignment: '/v1/processassignment'
 }

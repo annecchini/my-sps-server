@@ -1,5 +1,7 @@
 'use strict'
 
+const uuid = require('uuid/v4')
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
@@ -10,8 +12,8 @@ module.exports = {
         { id: uuid(), name: 'Tutor a distância' },
         { id: uuid(), name: 'Estagiário' },
         { id: uuid(), name: 'Professor' },
-        { id: uuid(), name: 'Designer Instrucional' },
-        { id: uuid(), name: 'Coordenador' }
+        { id: uuid(), name: 'Designer instrucional' },
+        { id: uuid(), name: 'Coordenador de curso' }
       ],
       {}
     )
