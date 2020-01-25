@@ -18,9 +18,9 @@ module.exports = {
           defaultValue: '',
           allowNull: false
         },
-        global: {
-          type: Sequelize.BOOLEAN,
-          defaultValue: false,
+        context: {
+          type: Sequelize.ENUM('GLOBAL', 'COURSE'),
+          defaultValue: 'GLOBAL',
           allowNull: false
         },
         createdAt: {

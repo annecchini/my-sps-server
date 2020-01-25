@@ -9,7 +9,7 @@ module.exports = {
     timezone: '-03:00'
   },
   test: {
-    username: 'root',
+    username: 'username',
     password: null,
     database: 'database_test',
     host: '127.0.0.1',
@@ -17,7 +17,7 @@ module.exports = {
     timezone: '-03:00'
   },
   production: {
-    username: 'root',
+    username: 'username',
     password: null,
     database: 'database_production',
     host: '127.0.0.1',

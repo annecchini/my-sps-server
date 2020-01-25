@@ -12,13 +12,13 @@ module.exports = {
           id: uuid(),
           name: 'Gerente',
           description: 'Usuário para operar todas as plataformas e recursos gerais da plataforma.',
-          global: true
+          context: 'GLOBAL'
         },
         {
           id: uuid(),
           name: 'Coordenador',
           description: 'Usuário para fazer as oeprações de um curso especifico.',
-          global: false
+          context: 'COURSE'
         }
       ],
       {}

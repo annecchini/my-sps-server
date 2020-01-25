@@ -13,7 +13,7 @@ module.exports = {
           id: uuid(),
           name: 'user_list',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.user}`
         },
@@ -21,7 +21,7 @@ module.exports = {
           id: uuid(),
           name: 'user_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.user}`
         },
@@ -29,7 +29,7 @@ module.exports = {
           id: uuid(),
           name: 'user_read',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.user}/:id`
         },
@@ -37,7 +37,7 @@ module.exports = {
           id: uuid(),
           name: 'user_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.user}/:id`
         },
@@ -45,7 +45,7 @@ module.exports = {
           id: uuid(),
           name: 'user_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.user}/:id`
         },
@@ -54,7 +54,7 @@ module.exports = {
           id: uuid(),
           name: 'graduationLevel_list',
           description: '',
-          global: false,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.graduationLevel}`
         },
@@ -62,7 +62,7 @@ module.exports = {
           id: uuid(),
           name: 'graduationLevel_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.graduationLevel}`
         },
@@ -70,7 +70,7 @@ module.exports = {
           id: uuid(),
           name: 'graduationLevel_read',
           description: '',
-          global: false,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.graduationLevel}/:id`
         },
@@ -78,7 +78,7 @@ module.exports = {
           id: uuid(),
           name: 'graduationLevel_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.graduationLevel}/:id`
         },
@@ -86,7 +86,7 @@ module.exports = {
           id: uuid(),
           name: 'graduationLevel_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.graduationLevel}/:id`
         },
@@ -95,7 +95,7 @@ module.exports = {
           id: uuid(),
           name: 'course_list',
           description: '',
-          global: false,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.course}`
         },
@@ -103,7 +103,7 @@ module.exports = {
           id: uuid(),
           name: 'course_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.course}`
         },
@@ -111,7 +111,7 @@ module.exports = {
           id: uuid(),
           name: 'course_read',
           description: '',
-          global: false,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.course}/:id`
         },
@@ -119,7 +119,7 @@ module.exports = {
           id: uuid(),
           name: 'course_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.course}/:id`
         },
@@ -127,7 +127,7 @@ module.exports = {
           id: uuid(),
           name: 'course_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.course}/:id`
         },
@@ -136,7 +136,7 @@ module.exports = {
           id: uuid(),
           name: 'process_list',
           description: '',
-          global: false,
+          context: 'COURSE',
           method: 'GET',
           urn: `${routeList.process}`
         },
@@ -144,7 +144,7 @@ module.exports = {
           id: uuid(),
           name: 'process_create',
           description: '',
-          global: false,
+          context: 'COURSE',
           method: 'POST',
           urn: `${routeList.process}`
         },
@@ -152,7 +152,7 @@ module.exports = {
           id: uuid(),
           name: 'process_read',
           description: '',
-          global: false,
+          context: 'COURSE',
           method: 'GET',
           urn: `${routeList.process}/:id`
         },
@@ -160,7 +160,7 @@ module.exports = {
           id: uuid(),
           name: 'process_update',
           description: '',
-          global: false,
+          context: 'COURSE',
           method: 'PUT',
           urn: `${routeList.process}/:id`
         },
@@ -168,7 +168,7 @@ module.exports = {
           id: uuid(),
           name: 'process_delete',
           description: '',
-          global: false,
+          context: 'COURSE',
           method: 'DELETE',
           urn: `${routeList.process}/:id`
         },
@@ -177,7 +177,7 @@ module.exports = {
           id: uuid(),
           name: 'role_list',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.role}`
         },
@@ -185,7 +185,7 @@ module.exports = {
           id: uuid(),
           name: 'role_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.role}`
         },
@@ -193,7 +193,7 @@ module.exports = {
           id: uuid(),
           name: 'role_read',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.role}/:id`
         },
@@ -201,7 +201,7 @@ module.exports = {
           id: uuid(),
           name: 'role_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.role}/:id`
         },
@@ -209,7 +209,7 @@ module.exports = {
           id: uuid(),
           name: 'role_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.role}/:id`
         },
@@ -218,7 +218,7 @@ module.exports = {
           id: uuid(),
           name: 'userRole_list',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.userRole}`
         },
@@ -226,7 +226,7 @@ module.exports = {
           id: uuid(),
           name: 'userRole_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.userRole}`
         },
@@ -234,7 +234,7 @@ module.exports = {
           id: uuid(),
           name: 'userRole_read',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.userRole}/:id`
         },
@@ -242,7 +242,7 @@ module.exports = {
           id: uuid(),
           name: 'userRole_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.userRole}/:id`
         },
@@ -250,7 +250,7 @@ module.exports = {
           id: uuid(),
           name: 'userRole_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.userRole}/:id`
         },
@@ -259,7 +259,7 @@ module.exports = {
           id: uuid(),
           name: 'permission_list',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.permission}`
         },
@@ -267,7 +267,7 @@ module.exports = {
           id: uuid(),
           name: 'permission_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.permission}`
         },
@@ -275,7 +275,7 @@ module.exports = {
           id: uuid(),
           name: 'permission_read',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.permission}/:id`
         },
@@ -283,7 +283,7 @@ module.exports = {
           id: uuid(),
           name: 'permission_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.permission}/:id`
         },
@@ -291,7 +291,7 @@ module.exports = {
           id: uuid(),
           name: 'permission_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.permission}/:id`
         },
@@ -300,7 +300,7 @@ module.exports = {
           id: uuid(),
           name: 'rolePermission_list',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.rolePermission}`
         },
@@ -308,7 +308,7 @@ module.exports = {
           id: uuid(),
           name: 'rolePermission_create',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'POST',
           urn: `${routeList.rolePermission}`
         },
@@ -316,7 +316,7 @@ module.exports = {
           id: uuid(),
           name: 'rolePermission_read',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'GET',
           urn: `${routeList.rolePermission}/:id`
         },
@@ -324,7 +324,7 @@ module.exports = {
           id: uuid(),
           name: 'rolePermission_update',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'PUT',
           urn: `${routeList.rolePermission}/:id`
         },
@@ -332,7 +332,7 @@ module.exports = {
           id: uuid(),
           name: 'rolePermission_delete',
           description: '',
-          global: true,
+          context: 'GLOBAL',
           method: 'DELETE',
           urn: `${routeList.rolePermission}/:id`
         }

@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '',
         allowNull: false
       },
-      global: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+      context: {
+        type: DataTypes.ENUM('GLOBAL', 'COURSE'),
+        defaultValue: 'GLOBAL',
         allowNull: false
       }
     },

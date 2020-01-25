@@ -32,13 +32,17 @@ const validateDescription = (value, db, mode, item) => {
   }
 }
 
-const validateGlobal = (value, db, mode, item) => {
-  //value is booblean
-  if (typeof value !== 'undefined' && (value === '' || (value != true && value != false))) {
-    return 'Formato inválido.'
+const validateContext = (value, db, mode, item) => {
+  //value exists and its necessary
+  if (typeof value === 'undefined' && mode === 'create') {
+    return 'Este campo é necessário.'
   }
 
-  //update (valor = false) mas o role possui permissões globais (se eu criar permissões com tipo)
+  //value é um dos valores permitidos.
+  const contexts = ['GLOBAL', 'COURSE']
+  if (typeof value !== 'undefined' && !Validator.isIn(value, contexts)) {
+    return 'Deve ser um contexto válido.'
+  }
 }
 
 const validateBody = async (body, db, mode, item) => {
@@ -54,9 +58,9 @@ const validateBody = async (body, db, mode, item) => {
     errors.push({ message: descriptionError, path: 'description' })
   }
 
-  const globalError = await validateGlobal(body.global, db, mode, item)
-  if (globalError) {
-    errors.push({ message: globalError, path: 'global' })
+  const contextError = await validateContext(body.context, db, mode, item)
+  if (contextError) {
+    errors.push({ message: contextError, path: 'context' })
   }
 
   return errors.length > 0 ? errors : null
