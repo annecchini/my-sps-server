@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       method: {
         type: DataTypes.ENUM('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH')
       },
-      urn: {
+      path: {
         type: DataTypes.STRING
       }
     },

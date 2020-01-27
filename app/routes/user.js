@@ -5,12 +5,12 @@ module.exports = app => {
 
   app
     .route(route)
-    .post(api.create)
+    .post(authApi.accessLevelRequired, api.create)
     .get(authApi.adminRequired, api.list)
 
   app
     .route(`${route}/:id`)
-    .get(authApi.authRequired, api.read)
+    .get(authApi.accessLevelRequired, api.read)
     .put(api.update)
     .delete(api.delete)
 }

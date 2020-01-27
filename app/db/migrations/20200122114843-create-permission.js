@@ -26,7 +26,7 @@ module.exports = {
         method: {
           type: Sequelize.ENUM('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH')
         },
-        urn: {
+        path: {
           type: Sequelize.STRING
         },
         createdAt: {
