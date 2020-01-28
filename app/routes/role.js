@@ -1,15 +1,16 @@
 module.exports = app => {
   const api = app.api.role
   const route = require('../../config/routeList').role
+  const authApi = app.api.auth
 
   app
     .route(route)
-    .post(api.create)
-    .get(api.list)
+    .post(authApi.adminRequired, api.create)
+    .get(authApi.adminRequired, api.list)
 
   app
     .route(`${route}/:id`)
-    .get(api.read)
-    .put(api.update)
-    .delete(api.delete)
+    .get(authApi.adminRequired, api.read)
+    .put(authApi.adminRequired, api.update)
+    .delete(authApi.adminRequired, api.delete)
 }
