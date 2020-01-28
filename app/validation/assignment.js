@@ -1,5 +1,7 @@
 'use strict'
 
+const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
+
 const validateName = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
@@ -49,4 +51,33 @@ const validateDelete = async (assignment, models) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody, validateDelete }
+const validatePermission = (req, db) => {
+  const errors = []
+
+  if (!isAdmin(req.user)) {
+    if (req.method === 'POST') {
+      const globalPermission = havePermission({ user: req.user, permission: 'assignment_create', context: 'GLOBAL' })
+      if (!globalPermission) {
+        errors.push({ message: 'O usuário não tem permissão para criar cargo.', path: 'permission' })
+      }
+    }
+
+    if (req.method === 'PUT') {
+      const globalPermission = havePermission({ user: req.user, permission: 'assignment_update', context: 'GLOBAL' })
+      if (!globalPermission) {
+        errors.push({ message: 'O usuário não tem permissão para atualizar cargo.', path: 'permission' })
+      }
+    }
+
+    if (req.method === 'DELETE') {
+      const globalPermission = havePermission({ user: req.user, permission: 'assignment_delete', context: 'GLOBAL' })
+      if (!globalPermission) {
+        errors.push({ message: 'O usuário não tem permissão para deletar cargo.', path: 'permission' })
+      }
+    }
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody, validateDelete, validatePermission }

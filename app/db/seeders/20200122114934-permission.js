@@ -335,6 +335,47 @@ module.exports = {
           context: 'GLOBAL',
           method: 'DELETE',
           path: `${routeList.rolePermission}/:id`
+        },
+        //Assignment permissions
+        {
+          id: uuid(),
+          name: 'assignment_list',
+          description: '',
+          context: 'GLOBAL',
+          method: 'GET',
+          path: `${routeList.assignment}`
+        },
+        {
+          id: uuid(),
+          name: 'assignment_create',
+          description: '',
+          context: 'GLOBAL',
+          method: 'POST',
+          path: `${routeList.assignment}`
+        },
+        {
+          id: uuid(),
+          name: 'assignment_read',
+          description: '',
+          context: 'GLOBAL',
+          method: 'GET',
+          path: `${routeList.assignment}/:id`
+        },
+        {
+          id: uuid(),
+          name: 'assignment_update',
+          description: '',
+          context: 'GLOBAL',
+          method: 'PUT',
+          path: `${routeList.assignment}/:id`
+        },
+        {
+          id: uuid(),
+          name: 'assingment_delete',
+          description: '',
+          context: 'GLOBAL',
+          method: 'DELETE',
+          path: `${routeList.assignment}/:id`
         }
       ],
       {}

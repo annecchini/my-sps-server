@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const jwtConf = require('../../config/jwt')
 const { generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../lib/error-helpers')
 const { validateBody, validateAuthorizedAuth } = require('../validation/auth')
-const { isAdmin, findPermission } = require('../lib/permission-system-helpers')
+const { isAdmin, findPermission, havePermission } = require('../lib/permission-system-helpers')
 
 module.exports = app => {
   const db = app.db.models.index
@@ -131,14 +131,18 @@ module.exports = app => {
         errors = [{ messsage: 'Permissão não encontrada para essa rota-metodo.', path: 'x-access-token' }]
         return res.status(500).json(error.parse('auth-500', generateUnauthorizedErrorMessage(errors)))
       }
-      if (havepermisson({ user: req.user, permission: permission, context: 'GLOBAL' })) {
+      if (havePermission({ user: req.user, permission: permission, context: 'GLOBAL' })) {
         console.log('tem permissão global')
         return next()
       }
 
       //if have permission on a course
       const course_id = findCourseId(req)
-      if (havepermisson({ user: req.user, permission: permission, context: 'COURSE', course_id: course_id })) {
+      if (!course_id) {
+        errors = [{ messsage: 'Id de curso não encontrada para essa rota-metodo.', path: 'x-access-token' }]
+        return res.status(500).json(error.parse('auth-500', generateUnauthorizedErrorMessage(errors)))
+      }
+      if (havePermission({ user: req.user, permission: permission, context: 'COURSE', course_id: course_id })) {
         console.log('tem permissão em um curso.')
         return next()
       }

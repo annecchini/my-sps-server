@@ -31,7 +31,7 @@ const havePermission = options => {
   //procurando pela permissão solicitada.
   let havePermission = false
   if (options.permission) {
-    havePermisson = userRoles
+    havePermission = userRoles
       .map(ur => {
         return ur.Role.rolePermissions
           .map(rp => {
@@ -43,6 +43,19 @@ const havePermission = options => {
   }
 
   return havePermission
+}
+
+const findCourseId = req => {
+  let course_id = null
+
+  if (req.method === 'GET') {
+  }
+
+  if (req.method === 'POST') {
+  }
+
+  if (req.method === 'PUT' || req.method === 'DELETE') {
+  }
 }
 
 module.exports = { hasRoles, isAdmin, findPermission, findCourse, havePermission }
