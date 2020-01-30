@@ -1,5 +1,6 @@
 'use strict'
 const Validator = require('validator')
+const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
 
 const validateIdentifier = (value, db, mode, item) => {
   //value exists and its necessary
@@ -136,4 +137,97 @@ const validateDelete = async (process, models) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody, validateDelete }
+const validatePermission = (req, db, item) => {
+  const errors = []
+
+  if (isAdmin(req.user)) {
+    return null
+  }
+
+  //create case
+  if (req.method === 'POST') {
+    const globalPermission = havePermission({
+      user: req.user,
+      permission: 'process_create',
+      context: 'GLOBAL'
+    })
+    if (globalPermission) return null
+
+    const course_id = req.body ? (req.body.course_id ? req.body.course_id : '') : ''
+
+    const coursePermission = havePermission({
+      user: req.user,
+      permission: 'process_create',
+      context: 'COURSE',
+      course_id: course_id
+    })
+    if (coursePermission) return null
+
+    errors.push({ message: 'O usuário não tem permissão para criar um processo desse curso.', path: 'permission' })
+    return errors.length > 0 ? errors : null
+  }
+
+  //update case
+  if (req.method === 'PUT') {
+    const globalPermission = havePermission({
+      user: req.user,
+      permission: 'process_update',
+      context: 'GLOBAL'
+    })
+    if (globalPermission) return null
+
+    const courseIdAtual = item.course_id
+    const courseIdNova = req.body ? (req.body.course_id ? req.body.course_id : item.course_id) : item.course_id
+    const coursePermissionAtual = havePermission({
+      user: req.user,
+      permission: 'process_update',
+      context: 'COURSE',
+      course_id: courseIdAtual
+    })
+    const coursePermissionNova = havePermission({
+      user: req.user,
+      permission: 'process_update',
+      context: 'COURSE',
+      course_id: courseIdNova
+    })
+    if (coursePermissionAtual && coursePermissionNova) return null
+
+    if (!coursePermissionAtual) {
+      errors.push({
+        message: 'O usuário não tem permissão para atualizar processo desse curso.',
+        path: 'permission'
+      })
+    }
+    if (!coursePermissionNova) {
+      errors.push({
+        message: 'O usuário não tem permissão para atualizar processo para esse curso.',
+        path: 'permission'
+      })
+    }
+    return errors.length > 0 ? errors : null
+  }
+
+  //delete case
+  if (req.method === 'DELETE') {
+    const globalPermission = havePermission({
+      user: req.user,
+      permission: 'process_delete',
+      context: 'GLOBAL'
+    })
+    if (globalPermission) return null
+
+    const course_id = item.course_id
+    const coursePermission = havePermission({
+      user: req.user,
+      permission: 'process_delete',
+      context: 'COURSE',
+      course_id: course_id
+    })
+    if (coursePermission) return null
+
+    errors.push({ message: 'O usuário não tem permissão para deletar processo desse curso.', path: 'permission' })
+    return errors.length > 0 ? errors : null
+  }
+}
+
+module.exports = { validateBody, validateDelete, validatePermission }

@@ -1,7 +1,11 @@
 'use strict'
 
-const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
-const { validateBody } = require('../validation/process')
+const {
+  idNotFoundErrorMessage,
+  generateValidationErrorMessage,
+  generateUnauthorizedErrorMessage
+} = require('../lib/error-helpers')
+const { validateBody, validatePermission } = require('../validation/process')
 
 module.exports = app => {
   const db = app.db.models.index
@@ -24,6 +28,12 @@ module.exports = app => {
     const errors = await validateBody(req.body, db, 'create')
     if (errors) {
       return res.status(400).json(error.parse('process-400', generateValidationErrorMessage(errors)))
+    }
+
+    //permission
+    const permissionErrors = validatePermission(req, db, null)
+    if (permissionErrors) {
+      return res.status(401).json(error.parse('process-401', generateUnauthorizedErrorMessage(permissionErrors)))
     }
 
     //try to create
@@ -55,6 +65,12 @@ module.exports = app => {
       return res.status(400).json(error.parse('process-400', idNotFoundErrorMessage()))
     }
 
+    //permission
+    const permissionErrors = validatePermission(req, db, toUpdate)
+    if (permissionErrors) {
+      return res.status(401).json(error.parse('process-401', generateUnauthorizedErrorMessage(permissionErrors)))
+    }
+
     //validation
     const errors = await validateBody(req.body, db, 'update', toUpdate)
     if (errors) {
@@ -78,6 +94,12 @@ module.exports = app => {
     //verify valid id
     if (!toDelete) {
       return res.status(400).json(error.parse('process-400', idNotFoundErrorMessage()))
+    }
+
+    //permission
+    const permissionErrors = validatePermission(req, db, toDelete)
+    if (permissionErrors) {
+      return res.status(401).json(error.parse('process-401', generateUnauthorizedErrorMessage(permissionErrors)))
     }
 
     //try to delete

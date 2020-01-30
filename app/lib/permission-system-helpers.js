@@ -1,7 +1,5 @@
 'use strict'
 
-const hasRoles = user => Boolean(user.UserRoles.length)
-
 const isAdmin = user => Boolean(user.GlobalAdmins.length)
 
 const findPermission = async (req, db) => {
@@ -9,10 +7,9 @@ const findPermission = async (req, db) => {
   return permission
 }
 
-const findCourse = () => {}
-
 const havePermission = options => {
   let userRoles = options.user.UserRoles
+  let havePermission = false
 
   //decidindo se vou aplicar contexto os userRoles
   if (options.context) {
@@ -24,20 +21,17 @@ const havePermission = options => {
   //decidindo se vou aplicar course_id os userRoles
   if (options.course_id) {
     userRoles = userRoles.filter(ur => {
-      return ur.course_id === options.course_id
+      return ur.Course.id === options.course_id
     })
   }
 
   //procurando pela permissão solicitada.
-  let havePermission = false
   if (options.permission) {
     havePermission = userRoles
       .map(ur => {
-        return ur.Role.rolePermissions
-          .map(rp => {
-            return rp.Permission.name === options.permission
-          })
-          .includes(true)
+        return ur.Role.RolePermissions.map(rp => {
+          return rp.Permission.name === options.permission
+        }).includes(true)
       })
       .includes(true)
   }
@@ -45,17 +39,4 @@ const havePermission = options => {
   return havePermission
 }
 
-const findCourseId = req => {
-  let course_id = null
-
-  if (req.method === 'GET') {
-  }
-
-  if (req.method === 'POST') {
-  }
-
-  if (req.method === 'PUT' || req.method === 'DELETE') {
-  }
-}
-
-module.exports = { hasRoles, isAdmin, findPermission, findCourse, havePermission }
+module.exports = { isAdmin, findPermission, havePermission }

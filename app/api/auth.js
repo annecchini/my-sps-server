@@ -21,9 +21,6 @@ module.exports = app => {
       {
         model: db.UserRole,
         required: false,
-        attributes: {
-          exclude: ['role_id', 'user_id', 'course_id']
-        },
         include: [
           {
             model: db.Role,
@@ -111,13 +108,13 @@ module.exports = app => {
       }
     }
 
-    //chamada ao middleware de autenticação antes de executar o codigo local.
+    //chamada ao middleware authRequired antes de executar o codigo local.
     await api.authRequired(req, res, internalAdminRequired)
   }
 
-  api.accessLevelRequired = async (req, res, next) => {
+  api.globalPermissionRequired = async (req, res, next) => {
     //logica do middleware
-    const internalAccessLevelRequired = async () => {
+    const internalGlobalPermissionRequired = async () => {
       let errors = []
 
       //if is admin
@@ -125,34 +122,59 @@ module.exports = app => {
         return next()
       }
 
-      //if have global permission
+      //find permission
       const permission = await findPermission(req, db)
       if (!permission) {
         errors = [{ messsage: 'Permissão não encontrada para essa rota-metodo.', path: 'x-access-token' }]
         return res.status(500).json(error.parse('auth-500', generateUnauthorizedErrorMessage(errors)))
       }
+
+      //if have global permission
       if (havePermission({ user: req.user, permission: permission, context: 'GLOBAL' })) {
-        console.log('tem permissão global')
         return next()
       }
 
-      //if have permission on a course
-      const course_id = findCourseId(req)
-      if (!course_id) {
-        errors = [{ messsage: 'Id de curso não encontrada para essa rota-metodo.', path: 'x-access-token' }]
-        return res.status(500).json(error.parse('auth-500', generateUnauthorizedErrorMessage(errors)))
-      }
-      if (havePermission({ user: req.user, permission: permission, context: 'COURSE', course_id: course_id })) {
-        console.log('tem permissão em um curso.')
-        return next()
-      }
-
-      errors = [{ messsage: 'Nível de acesso requerido.', path: 'x-access-token' }]
+      errors = [{ messsage: 'Nível de acesso requerido. (GLOBAL)', path: 'x-access-token' }]
       return res.status(401).json(error.parse('auth-401', generateUnauthorizedErrorMessage(errors)))
     }
 
-    //chamada ao middleware de autenticação antes de executar o codigo local.
-    await api.authRequired(req, res, internalAccessLevelRequired)
+    //chamada ao middleware authRequired antes de executar o codigo local.
+    await api.authRequired(req, res, internalGlobalPermissionRequired)
+  }
+
+  api.permissionRequired = async (req, res, next) => {
+    //logica do middleware
+    const internalPermissionRequired = async () => {
+      let errors = []
+
+      //if is admin
+      if (isAdmin(req.user)) {
+        return next()
+      }
+
+      //find permission
+      const permission = await findPermission(req, db)
+      if (!permission) {
+        errors = [{ messsage: 'Permissão não encontrada para essa rota-metodo.', path: 'x-access-token' }]
+        return res.status(500).json(error.parse('auth-500', generateUnauthorizedErrorMessage(errors)))
+      }
+
+      //if have global permission
+      if (havePermission({ user: req.user, permission: permission, context: 'GLOBAL' })) {
+        return next()
+      }
+
+      //if have permission on one course
+      if (havePermission({ user: req.user, permission: permission, context: 'COURSE' })) {
+        return next()
+      }
+
+      errors = [{ messsage: 'Nível de acesso requerido. (GLOBAL, COURSE)', path: 'x-access-token' }]
+      return res.status(401).json(error.parse('auth-401', generateUnauthorizedErrorMessage(errors)))
+    }
+
+    //chamada ao middleware authRequired antes de executar o codigo local.
+    await api.authRequired(req, res, internalPermissionRequired)
   }
 
   return api

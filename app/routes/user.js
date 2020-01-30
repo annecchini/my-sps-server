@@ -5,12 +5,12 @@ module.exports = app => {
 
   app
     .route(route)
-    .post(authApi.accessLevelRequired, api.create)
-    .get(authApi.adminRequired, api.list)
+    .post(authApi.globalPermissionRequired, api.create)
+    .get(authApi.globalPermissionRequired, api.list)
 
   app
     .route(`${route}/:id`)
-    .get(authApi.accessLevelRequired, api.read)
-    .put(api.update)
-    .delete(api.delete)
+    .get(authApi.globalPermissionRequired, api.read)
+    .put(authApi.globalPermissionRequired, api.update)
+    .delete(authApi.globalPermissionRequired, api.delete)
 }
