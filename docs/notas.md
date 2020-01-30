@@ -12,4 +12,11 @@
 
 # Usar contexto no sistema de permissões?
 
-- ???
+- Criei usando contexto para ficar mais evidente
+- Acredito que dessa forma posso criar outros contextos no futuro.
+
+# Como as permissões estão funcionando. Por hora de duas formas:
+
+- usando middleware para admin e permissões globais.
+- dentro das apis (validatePermission) quando preciso recuperar o course_id de um modelo.
+- fiz dessa forma pois gerar o modelo a partir da url estava falho e inificiente.

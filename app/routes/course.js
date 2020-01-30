@@ -1,15 +1,16 @@
 module.exports = app => {
   const api = app.api.course
   const route = require('../../config/routeList').course
+  const authApi = app.api.auth
 
   app
     .route(route)
-    .post(api.create)
+    .post(authApi.globalPermissionRequired, api.create)
     .get(api.list)
 
   app
     .route(`${route}/:id`)
     .get(api.read)
-    .put(api.update)
-    .delete(api.delete)
+    .put(authApi.globalPermissionRequired, api.update)
+    .delete(authApi.globalPermissionRequired, api.delete)
 }
