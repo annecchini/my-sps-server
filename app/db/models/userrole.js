@@ -8,14 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true
-      },
-      course_id: {
-        type: DataTypes.UUID,
-        allowNull: true,
-        references: {
-          model: 'Courses',
-          key: 'id'
-        }
       }
     },
     { paranoid: true, timestamps: true }
