@@ -177,7 +177,7 @@ const validatePermission = (req, db, item) => {
     if (globalPermission) return null
 
     const courseIdAtual = item.course_id
-    const courseIdNova = req.body ? (req.body.course_id ? req.body.course_id : item.course_id) : item.course_id
+    const courseIdNova = req.body && req.body.course_id ? req.body.course_id : item.course_id
     const coursePermissionAtual = havePermission({
       user: req.user,
       permission: 'process_update',

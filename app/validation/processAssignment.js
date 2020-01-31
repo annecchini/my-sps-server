@@ -1,5 +1,8 @@
 'use strict'
 
+const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
+const { findCourseIdByProcessId } = require('../lib/course-helpers')
+
 const validateProcessId = async (value, db, mode, item) => {
   //value exists and its necessary
   if (typeof value === 'undefined' && mode === 'create') {
@@ -84,4 +87,100 @@ const validateBody = async (body, db, mode, item) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody }
+const validatePermission = async (req, db, item) => {
+  const errors = []
+
+  if (isAdmin(req.user)) {
+    return null
+  }
+
+  //create case
+  if (req.method === 'POST') {
+    const globalPermission = havePermission({
+      user: req.user,
+      permission: 'processAssignment_create',
+      context: 'GLOBAL'
+    })
+    if (globalPermission) return null
+
+    const course_id = await findCourseIdByProcessId(req.body.process_id, db)
+    const coursePermission = havePermission({
+      user: req.user,
+      permission: 'processAssignment_create',
+      context: 'COURSE',
+      course_id: course_id ? course_id : ''
+    })
+    if (coursePermission) return null
+
+    errors.push({
+      message: 'Sem permissão para criar atribuição de cargo para esse processo.',
+      path: 'permission'
+    })
+    return errors.length > 0 ? errors : null
+  }
+
+  //update case
+  if (req.method === 'PUT') {
+    const globalPermission = havePermission({
+      user: req.user,
+      permission: 'process_update',
+      context: 'GLOBAL'
+    })
+    if (globalPermission) return null
+
+    const courseIdAtual = await findCourseIdByProcessId(item.process_id, db)
+    const processIdNova = req.body && req.body.process_id ? req.body.process_id : item.process_id
+    const courseIdNova = await findCourseIdByProcessId(processIdNova, db)
+    const coursePermissionAtual = havePermission({
+      user: req.user,
+      permission: 'processAssignment_update',
+      context: 'COURSE',
+      course_id: courseIdAtual
+    })
+    const coursePermissionNova = havePermission({
+      user: req.user,
+      permission: 'processAssignment_update',
+      context: 'COURSE',
+      course_id: courseIdNova
+    })
+    if (coursePermissionAtual && coursePermissionNova) return null
+
+    if (!coursePermissionAtual) {
+      errors.push({
+        message: 'Sem permissão permissão para atualizar atribuição de cargo desse processo.',
+        path: 'permission'
+      })
+    }
+    if (!coursePermissionNova) {
+      errors.push({
+        message: 'Sem permissão para atualizar atribuição de cargo para esse processo.',
+        path: 'permission'
+      })
+    }
+    return errors.length > 0 ? errors : null
+  }
+
+  //delete case
+  if (req.method === 'DELETE') {
+    const globalPermission = havePermission({
+      user: req.user,
+      permission: 'processAssignment_delete',
+      context: 'GLOBAL'
+    })
+    if (globalPermission) return null
+
+    const course_id = await findCourseIdByProcessId(item.process_id, db)
+    const coursePermission = havePermission({
+      user: req.user,
+      permission: 'processAssignment_delete',
+      context: 'COURSE',
+      course_id: course_id
+    })
+    if (coursePermission) return null
+
+    errors.push({ message: 'Sem permissão para deletar atribuição de cargo desse processo.', path: 'permission' })
+    return errors.length > 0 ? errors : null
+  }
+}
+
+module.exports = { validateBody, validatePermission }

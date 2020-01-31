@@ -19,4 +19,4 @@
 
 - usando middleware para admin e permissões globais.
 - dentro das apis (validatePermission) quando preciso recuperar o course_id de um modelo.
-- fiz dessa forma pois gerar o modelo a partir da url estava falho e inificiente.
+- fiz dessa forma pois gerar o modelo a partir da url estava falho e ineficiente.

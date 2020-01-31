@@ -1,7 +1,11 @@
 'use strict'
 
-const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
-const { validateBody } = require('../validation/processAssignment')
+const {
+  idNotFoundErrorMessage,
+  generateValidationErrorMessage,
+  generateUnauthorizedErrorMessage
+} = require('../lib/error-helpers')
+const { validateBody, validatePermission } = require('../validation/processAssignment')
 
 module.exports = app => {
   const db = app.db.models.index
@@ -24,6 +28,14 @@ module.exports = app => {
     const errors = await validateBody(req.body, db, 'create')
     if (errors) {
       return res.status(400).json(error.parse('processAssignment-400', generateValidationErrorMessage(errors)))
+    }
+
+    //permission
+    const permissionErrors = await validatePermission(req, db, null)
+    if (permissionErrors) {
+      return res
+        .status(401)
+        .json(error.parse('processAssignment-401', generateUnauthorizedErrorMessage(permissionErrors)))
     }
 
     //try to create
@@ -61,6 +73,14 @@ module.exports = app => {
       return res.status(400).json(error.parse('processAssignment-400', generateValidationErrorMessage(errors)))
     }
 
+    //permission
+    const permissionErrors = await validatePermission(req, db, toUpdate)
+    if (permissionErrors) {
+      return res
+        .status(401)
+        .json(error.parse('processAssignment-401', generateUnauthorizedErrorMessage(permissionErrors)))
+    }
+
     //try to update
     try {
       const updated = await toUpdate.update(req.body, {
@@ -78,6 +98,14 @@ module.exports = app => {
     //verify valid id
     if (!toDelete) {
       return res.status(400).json(error.parse('processAssignment-400', idNotFoundErrorMessage()))
+    }
+
+    //permission
+    const permissionErrors = await validatePermission(req, db, toDelete)
+    if (permissionErrors) {
+      return res
+        .status(401)
+        .json(error.parse('processAssignment-401', generateUnauthorizedErrorMessage(permissionErrors)))
     }
 
     //try to delete
