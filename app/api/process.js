@@ -13,6 +13,14 @@ module.exports = app => {
   const error = app.error.process
 
   api.list = (req, res) => {
+    //Recolher parametros de paginação.
+
+    //Recolher parametros de filtros.
+
+    //Aplicar parametros e filtros.
+
+    //
+
     db.Process.findAll({ order: [['createdAt', 'DESC']] }).then(
       Processes => {
         return res.json(Processes)
