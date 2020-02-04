@@ -5,68 +5,81 @@ const {
   generateValidationErrorMessage,
   generateUnauthorizedErrorMessage
 } = require('../lib/error-helpers')
+const {
+  validYears,
+  validIds,
+  findUserByToken,
+  allowedCourseIds,
+  getCourseIdsByGraduationLevelIds
+} = require('../lib/process-helpers')
 const { validateBody, validatePermission } = require('../validation/process')
+const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
 
 module.exports = app => {
   const db = app.db.models.index
   const api = {}
   const error = app.error.process
+  const $or = db.Sequelize.Op.or // sequelize OR shortcut
 
-  api.list = (req, res) => {
+  api.list = async (req, res) => {
     //Recolher parametros de paginação.
     req.query.limit = req.query.limit > 100 ? 100 : req.query.limit * 1 || 10
     req.query.page = req.query.page * 1 || 1
     req.query.offset = (req.query.page - 1) * req.query.limit
 
     //Recolher parametros de filtros.
-    const whereYears = req.query.year ? { year: validYears(req.query.years) } : {}
-    const whereCourseIdsFromGraduationLevelIds = {}
-    let whereCourseIds = req.query.courses ? { course_id: validIds(req.query.courses) } : {}
+    const whereYears = req.query.years ? { year: validYears(req.query.years) } : {}
+    const CourseIds = req.query.courses ? validIds(req.query.courses) : []
+    const CourseIdsFromGraduationLevelIds = req.query.graduationLevels
+      ? getCourseIdsByGraduationLevelIds(validIds(req.query.graduationLevels))
+      : []
     const whereProcessIdsFromAssignmentIds = {}
+
+    //Fundir course_ids dos filtros Course e GraduationLevel
+    const fusedCourseIds = [...new Set(CourseIds.concat(CourseIdsFromGraduationLevelIds))]
+    const whereCourseIds = fusedCourseIds.length > 0 ? { course_id: fusedCourseIds } : {}
 
     //Definir que processos ocultos serão exibidos baseado no login.
     let whereAccess = {}
-    if (req.user) {
+    const user = await findUserByToken(req.headers['x-access-token'], db)
+    if (user) {
+      const haveAdmin = isAdmin(user)
+      const haveGlobalAccess = await havePermission({ user: user, permission: 'process_list', context: 'GLOBAL' })
+      if (!haveAdmin && !haveGlobalAccess) {
+        const idsAllowed = allowedCourseIds(user, 'selectiveprocess_list')
+        whereAccess = { [$or]: [{ visible: true }, { course_id: idsAllowed }] }
+      }
     } else {
       whereAccess = { visible: true }
     }
 
     //Pesquisar processos, montar resultado e enviar.
-    models.SelectiveProcess.findAndCountAll({
+    db.Process.findAndCountAll({
       include: [],
       distinct: true,
       limit: req.query.limit,
       offset: req.query.offset,
       page: req.query.page,
-      where: { ...whereYears, ...whereCourseIds },
+      where: { ...whereYears, ...whereCourseIds, ...whereAccess },
       order: [
         ['year', 'DESC'],
         ['identifier', 'DESC']
       ]
-    }).then(
-      selectiveProcesses =>
+    }).then(processes => {
+      return (
         res.json({
           info: {
-            count: selectiveProcesses.count,
+            count: processes.count,
             currentPage: req.query.page ? req.query.page * 1 : 1,
-            numberOfPages: Math.ceil(selectiveProcesses.count / req.query.limit)
+            numberOfPages: processes.count > 0 ? Math.ceil(processes.count / req.query.limit) : 1
           },
-          selectiveProcesses: selectiveProcesses.rows.map(injectAssignmentAndRemoveVacancies)
+          Processes: processes.rows
         }),
-      e => {
-        res.status(500).json(error.parse('process-500', e))
-      }
-    )
-
-    //antigo.
-    db.Process.findAll({ order: [['createdAt', 'DESC']] }).then(
-      Processes => {
-        return res.json(Processes)
-      },
-      e => {
-        return res.status(500).json(error.parse('process-500', e))
-      }
-    )
+        e => {
+          return res.status(500).json(error.parse('process-500', e))
+        }
+      )
+    })
   }
 
   api.create = async (req, res) => {
