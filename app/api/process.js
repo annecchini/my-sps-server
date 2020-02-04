@@ -14,13 +14,51 @@ module.exports = app => {
 
   api.list = (req, res) => {
     //Recolher parametros de paginação.
+    req.query.limit = req.query.limit > 100 ? 100 : req.query.limit * 1 || 10
+    req.query.page = req.query.page * 1 || 1
+    req.query.offset = (req.query.page - 1) * req.query.limit
 
     //Recolher parametros de filtros.
+    const whereYears = req.query.year ? { year: validYears(req.query.years) } : {}
+    const whereCourseIdsFromGraduationLevelIds = {}
+    let whereCourseIds = req.query.courses ? { course_id: validIds(req.query.courses) } : {}
+    const whereProcessIdsFromAssignmentIds = {}
 
-    //Aplicar parametros e filtros.
+    //Definir que processos ocultos serão exibidos baseado no login.
+    let whereAccess = {}
+    if (req.user) {
+    } else {
+      whereAccess = { visible: true }
+    }
 
-    //
+    //Pesquisar processos, montar resultado e enviar.
+    models.SelectiveProcess.findAndCountAll({
+      include: [],
+      distinct: true,
+      limit: req.query.limit,
+      offset: req.query.offset,
+      page: req.query.page,
+      where: { ...whereYears, ...whereCourseIds },
+      order: [
+        ['year', 'DESC'],
+        ['identifier', 'DESC']
+      ]
+    }).then(
+      selectiveProcesses =>
+        res.json({
+          info: {
+            count: selectiveProcesses.count,
+            currentPage: req.query.page ? req.query.page * 1 : 1,
+            numberOfPages: Math.ceil(selectiveProcesses.count / req.query.limit)
+          },
+          selectiveProcesses: selectiveProcesses.rows.map(injectAssignmentAndRemoveVacancies)
+        }),
+      e => {
+        res.status(500).json(error.parse('process-500', e))
+      }
+    )
 
+    //antigo.
     db.Process.findAll({ order: [['createdAt', 'DESC']] }).then(
       Processes => {
         return res.json(Processes)
