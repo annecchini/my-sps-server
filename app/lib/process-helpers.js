@@ -102,8 +102,19 @@ const findUserByToken = async (token, db) => {
   return await db.User.findByPk(decoded.data, userInclude)
 }
 
-const getCourseIdsByGraduationLevelIds = graduationLevelIds => {
-  return []
+const getCourseIdsByGraduationLevelIds = async (graduationLevelIds, db) => {
+  const graduationLevels = await db.GraduationLevel.findAll({
+    where: { id: [graduationLevelIds] },
+    include: [
+      {
+        model: db.Course,
+        required: false
+      }
+    ]
+  })
+  const coursesIdsPerGraduationLevel = graduationLevels.map(gl => gl.Courses.map(course => course.id))
+  const courseIds = [].concat(...coursesIdsPerGraduationLevel)
+  return courseIds
 }
 
 const allowedCourseIds = (user, permission) => {

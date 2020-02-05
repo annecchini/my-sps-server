@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     { paranoid: true, timestamps: true }
   )
 
+  GraduationLevel.associate = function(models) {
+    GraduationLevel.hasMany(models.Course, { foreignKey: 'graduationLevel_id' })
+  }
+
   GraduationLevel.beforeDestroy(async (graduationLevel, _) => {
     //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
     const errors = await validateDelete(graduationLevel, sequelize.models)

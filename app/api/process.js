@@ -31,13 +31,15 @@ module.exports = app => {
     const whereYears = req.query.years ? { year: validYears(req.query.years) } : {}
     const CourseIds = req.query.courses ? validIds(req.query.courses) : []
     const CourseIdsFromGraduationLevelIds = req.query.graduationLevels
-      ? getCourseIdsByGraduationLevelIds(validIds(req.query.graduationLevels))
+      ? await getCourseIdsByGraduationLevelIds(validIds(req.query.graduationLevels), db)
       : []
     const whereProcessIdsFromAssignmentIds = {}
 
+    console.log(await getCourseIdsByGraduationLevelIds(['1721a085-7fad-4243-94c9-eae073929f60'], db))
+
     //Fundir course_ids dos filtros Course e GraduationLevel
-    const fusedCourseIds = [...new Set(CourseIds.concat(CourseIdsFromGraduationLevelIds))]
-    const whereCourseIds = fusedCourseIds.length > 0 ? { course_id: fusedCourseIds } : {}
+    const intersectionCourseIds = CourseIds.filter(id => CourseIdsFromGraduationLevelIds.includes(id))
+    const whereCourseIds = intersectionCourseIds.length > 0 ? { course_id: intersectionCourseIds } : {}
 
     //Definir que processos ocultos serão exibidos baseado no login.
     let whereAccess = {}
