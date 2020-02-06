@@ -38,8 +38,7 @@ module.exports = app => {
       ? { id: await getProcessIdsByAssignmentIds(validIds(req.query.assignments), db) }
       : {}
 
-    console.log(CourseIds.length > 0 && CourseIdsFromGraduationLevelIds.length > 0)
-    //decidir como será whereCourseIds a partir dos filtros Course e GraduationLevel
+    //Decidir como será whereCourseIds a partir dos filtros Course e GraduationLevel
     let whereCourseIds = {}
     if (CourseIds.length > 0 && CourseIdsFromGraduationLevelIds.length > 0) {
       const intersectionCourseIds = CourseIds.filter(id => CourseIdsFromGraduationLevelIds.includes(id))
