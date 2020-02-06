@@ -1,2 +1,2 @@
 - testar ManyToMany entre User-Role e entre Role-Permission?
-- testar se os filtros de acesso funcionam corretamente para todos os casos.
+- permitir que o backend seja servido em um subfolder?
