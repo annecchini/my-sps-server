@@ -1,6 +1,7 @@
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const { invalidRequestErrorMessage } = require('./error-helpers')
+//const configSite = require('../../config/site')
 
 module.exports = app => {
   const error = app.error.request
@@ -20,6 +21,10 @@ module.exports = app => {
     }
   }
 
+  //const baseUrl = new URL(configSite.url).pathname
+  //console.log("baseUrl:", baseUrl)
+
+  //app.use(baseUrl)
   app.set('json spaces', 4)
   app.use(corsMiddleware())
   app.use(helmet())
