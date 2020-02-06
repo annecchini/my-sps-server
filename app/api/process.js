@@ -10,7 +10,8 @@ const {
   validIds,
   findUserByToken,
   allowedCourseIds,
-  getCourseIdsByGraduationLevelIds
+  getCourseIdsByGraduationLevelIds,
+  getProcessIdsByAssignmentIds
 } = require('../lib/process-helpers')
 const { validateBody, validatePermission } = require('../validation/process')
 const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
@@ -33,13 +34,21 @@ module.exports = app => {
     const CourseIdsFromGraduationLevelIds = req.query.graduationLevels
       ? await getCourseIdsByGraduationLevelIds(validIds(req.query.graduationLevels), db)
       : []
-    const whereProcessIdsFromAssignmentIds = {}
+    const whereProcessIdsFromAssignmentIds = req.query.assignments
+      ? { id: await getProcessIdsByAssignmentIds(validIds(req.query.assignments), db) }
+      : {}
 
-    console.log(await getCourseIdsByGraduationLevelIds(['1721a085-7fad-4243-94c9-eae073929f60'], db))
-
-    //Fundir course_ids dos filtros Course e GraduationLevel
-    const intersectionCourseIds = CourseIds.filter(id => CourseIdsFromGraduationLevelIds.includes(id))
-    const whereCourseIds = intersectionCourseIds.length > 0 ? { course_id: intersectionCourseIds } : {}
+    console.log(CourseIds.length > 0 && CourseIdsFromGraduationLevelIds.length > 0)
+    //decidir como será whereCourseIds a partir dos filtros Course e GraduationLevel
+    let whereCourseIds = {}
+    if (CourseIds.length > 0 && CourseIdsFromGraduationLevelIds.length > 0) {
+      const intersectionCourseIds = CourseIds.filter(id => CourseIdsFromGraduationLevelIds.includes(id))
+      whereCourseIds = intersectionCourseIds.length > 0 ? { course_id: intersectionCourseIds } : { course_id: null }
+    } else if (CourseIds.length > 0) {
+      whereCourseIds = { course_id: CourseIds }
+    } else if (CourseIdsFromGraduationLevelIds.length > 0) {
+      whereCourseIds = { course_id: CourseIdsFromGraduationLevelIds }
+    }
 
     //Definir que processos ocultos serão exibidos baseado no login.
     let whereAccess = {}
@@ -48,7 +57,7 @@ module.exports = app => {
       const haveAdmin = isAdmin(user)
       const haveGlobalAccess = await havePermission({ user: user, permission: 'process_list', context: 'GLOBAL' })
       if (!haveAdmin && !haveGlobalAccess) {
-        const idsAllowed = allowedCourseIds(user, 'selectiveprocess_list')
+        const idsAllowed = allowedCourseIds(user, 'process_list')
         whereAccess = { [$or]: [{ visible: true }, { course_id: idsAllowed }] }
       }
     } else {
@@ -62,7 +71,7 @@ module.exports = app => {
       limit: req.query.limit,
       offset: req.query.offset,
       page: req.query.page,
-      where: { ...whereYears, ...whereCourseIds, ...whereAccess },
+      where: { ...whereYears, ...whereCourseIds, ...whereProcessIdsFromAssignmentIds, ...whereAccess },
       order: [
         ['year', 'DESC'],
         ['identifier', 'DESC']

@@ -105,12 +105,7 @@ const findUserByToken = async (token, db) => {
 const getCourseIdsByGraduationLevelIds = async (graduationLevelIds, db) => {
   const graduationLevels = await db.GraduationLevel.findAll({
     where: { id: [graduationLevelIds] },
-    include: [
-      {
-        model: db.Course,
-        required: false
-      }
-    ]
+    include: [{ model: db.Course, required: false }]
   })
   const coursesIdsPerGraduationLevel = graduationLevels.map(gl => gl.Courses.map(course => course.id))
   const courseIds = [].concat(...coursesIdsPerGraduationLevel)
@@ -129,4 +124,20 @@ const allowedCourseIds = (user, permission) => {
     .map(obj => obj.courseId)
 }
 
-module.exports = { findUserByToken, validYears, validIds, getCourseIdsByGraduationLevelIds, allowedCourseIds }
+const getProcessIdsByAssignmentIds = async (assignmentIds, db) => {
+  const processAssignments = await db.ProcessAssignment.findAll({
+    where: { assignment_id: assignmentIds },
+    include: [{ model: db.Process, required: false }]
+  })
+  const processIds = [...new Set(processAssignments.map(pa => pa.Process.id))]
+  return processIds
+}
+
+module.exports = {
+  findUserByToken,
+  validYears,
+  validIds,
+  getCourseIdsByGraduationLevelIds,
+  allowedCourseIds,
+  getProcessIdsByAssignmentIds
+}
