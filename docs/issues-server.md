@@ -1,2 +1,2 @@
 - testar ManyToMany entre User-Role e entre Role-Permission?
-- permitir que o backend seja servido em um subfolder?
+- verficar novamente a ordem validation/permission na api.
