@@ -1,6 +1,6 @@
 'use strict'
 const Validator = require('validator')
-const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
+const { isAdmin, havePermission } = require('../utils/permission-system-helpers')
 
 const validateIdentifier = (value, db, mode, item) => {
   //value exists and its necessary

@@ -4,7 +4,7 @@ const {
   idNotFoundErrorMessage,
   generateValidationErrorMessage,
   generateUnauthorizedErrorMessage
-} = require('../lib/error-helpers')
+} = require('../utils/error-helpers')
 const {
   validYears,
   validIds,
@@ -12,9 +12,9 @@ const {
   allowedCourseIds,
   getCourseIdsByGraduationLevelIds,
   getProcessIdsByAssignmentIds
-} = require('../lib/process-helpers')
+} = require('../utils/process-helpers')
 const { validateBody, validatePermission } = require('../validation/process')
-const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
+const { isAdmin, havePermission } = require('../utils/permission-system-helpers')
 
 module.exports = app => {
   const db = app.db.models.index

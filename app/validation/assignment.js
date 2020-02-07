@@ -1,6 +1,6 @@
 'use strict'
 
-const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
+const { isAdmin, havePermission } = require('../utils/permission-system-helpers')
 
 const validateName = async (value, db, mode, item) => {
   //value exists and its necessary

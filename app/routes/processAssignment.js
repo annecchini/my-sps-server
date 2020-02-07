@@ -2,7 +2,7 @@ module.exports = app => {
   const api = app.api.processAssignment
   const route = require('../../config/routeList').processAssignment
   const authApi = app.api.auth
-  const { basePath } = require('../lib/express-helpers')
+  const { basePath } = require('../utils/express-helpers')
 
   app
     .route(`${basePath}${route}`)

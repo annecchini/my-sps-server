@@ -3,9 +3,9 @@
 const jwt = require('jsonwebtoken')
 
 const jwtConf = require('../../config/jwt')
-const { generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../lib/error-helpers')
+const { generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../utils/error-helpers')
 const { validateBody, validateAuthorizedAuth } = require('../validation/auth')
-const { isAdmin, findPermission, havePermission } = require('../lib/permission-system-helpers')
+const { isAdmin, findPermission, havePermission } = require('../utils/permission-system-helpers')
 
 module.exports = app => {
   const db = app.db.models.index

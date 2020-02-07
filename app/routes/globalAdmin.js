@@ -2,7 +2,7 @@ module.exports = app => {
   const api = app.api.globalAdmin
   const route = require('../../config/routeList').globalAdmin
   const authApi = app.api.auth
-  const { basePath } = require('../lib/express-helpers')
+  const { basePath } = require('../utils/express-helpers')
 
   app
     .route(`${basePath}${route}`)

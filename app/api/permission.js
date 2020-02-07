@@ -1,6 +1,6 @@
 'use strict'
 
-const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../lib/error-helpers')
+const { idNotFoundErrorMessage, generateValidationErrorMessage } = require('../utils/error-helpers')
 const { validateBody } = require('../validation/permission')
 
 module.exports = app => {

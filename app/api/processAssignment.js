@@ -4,7 +4,7 @@ const {
   idNotFoundErrorMessage,
   generateValidationErrorMessage,
   generateUnauthorizedErrorMessage
-} = require('../lib/error-helpers')
+} = require('../utils/error-helpers')
 const { validateBody, validatePermission } = require('../validation/processAssignment')
 
 module.exports = app => {

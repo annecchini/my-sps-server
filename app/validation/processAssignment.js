@@ -1,7 +1,7 @@
 'use strict'
 
-const { isAdmin, havePermission } = require('../lib/permission-system-helpers')
-const { findCourseIdByProcessId } = require('../lib/course-helpers')
+const { isAdmin, havePermission } = require('../utils/permission-system-helpers')
+const { findCourseIdByProcessId } = require('../utils/course-helpers')
 
 const validateProcessId = async (value, db, mode, item) => {
   //value exists and its necessary
