@@ -1,2 +1,1 @@
 - testar ManyToMany entre User-Role e entre Role-Permission?
-- verficar novamente a ordem validation/permission na api.
