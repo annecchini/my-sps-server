@@ -2,6 +2,7 @@
 
 const siteConfig = require('../../config/site')
 
-const basePath = new URL(siteConfig.url).pathname
+const url = new URL(siteConfig.url)
+const basePath = url.pathname !== '/' ? url.pathname : ''
 
 module.exports = { basePath }

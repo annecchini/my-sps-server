@@ -1,16 +1,16 @@
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
+var cors = require('cors')
 const { invalidRequestErrorMessage } = require('./error-helpers')
 //const configSite = require('../../config/site')
 
 module.exports = app => {
   const error = app.error.request
 
-  const corsMiddleware = () => (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*') // update to match the domain you will make the request from
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token')
-    res.header('Access-Control-Allow-Methods', '*')
-    next()
+  const corsOptions = {
+    origin: '*',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, x-access-token',
+    methods: '*'
   }
 
   const invalidRequestMiddleware = () => (err, req, res, next) => {
@@ -21,12 +21,8 @@ module.exports = app => {
     }
   }
 
-  //const baseUrl = new URL(configSite.url).pathname
-  //console.log("baseUrl:", baseUrl)
-
-  //app.use(baseUrl)
   app.set('json spaces', 4)
-  app.use(corsMiddleware())
+  app.use(cors(corsOptions))
   app.use(helmet())
   app.use(bodyParser.json())
   app.use(invalidRequestMiddleware())
