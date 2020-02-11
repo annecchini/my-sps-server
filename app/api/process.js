@@ -134,16 +134,16 @@ module.exports = app => {
       return res.status(400).json(error.parse('process-400', idNotFoundErrorMessage()))
     }
 
-    //permission
-    const permissionErrors = validatePermission(req, db, toUpdate)
-    if (permissionErrors) {
-      return res.status(401).json(error.parse('process-401', generateUnauthorizedErrorMessage(permissionErrors)))
-    }
-
     //validation
     const errors = await validateBody(req.body, db, 'update', toUpdate)
     if (errors) {
       return res.status(400).json(error.parse('process-400', generateValidationErrorMessage(errors)))
+    }
+
+    //permission
+    const permissionErrors = validatePermission(req, db, toUpdate)
+    if (permissionErrors) {
+      return res.status(401).json(error.parse('process-401', generateUnauthorizedErrorMessage(permissionErrors)))
     }
 
     //try to update
