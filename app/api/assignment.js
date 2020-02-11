@@ -5,7 +5,7 @@ const {
   generateValidationErrorMessage,
   generateUnauthorizedErrorMessage
 } = require('../utils/error-helpers')
-const { validateBody, validatePermission } = require('../validation/assignment')
+const { validateBody } = require('../validation/assignment')
 
 module.exports = app => {
   const db = app.db.models.index
@@ -24,12 +24,6 @@ module.exports = app => {
   }
 
   api.create = async (req, res) => {
-    //permission
-    const permissionErrors = validatePermission(req, db)
-    if (permissionErrors) {
-      return res.status(401).json(error.parse('assignment-401', generateUnauthorizedErrorMessage(permissionErrors)))
-    }
-
     //validation
     const errors = await validateBody(req.body, db, 'create')
     if (errors) {
@@ -65,12 +59,6 @@ module.exports = app => {
       return res.status(400).json(error.parse('assignment-400', idNotFoundErrorMessage()))
     }
 
-    //permission
-    const permissionErrors = validatePermission(req, db)
-    if (permissionErrors) {
-      return res.status(401).json(error.parse('assignment-401', generateUnauthorizedErrorMessage(permissionErrors)))
-    }
-
     //validation
     const errors = await validateBody(req.body, db, 'update', toUpdate)
     if (errors) {
@@ -94,12 +82,6 @@ module.exports = app => {
     //verify valid id
     if (!toDelete) {
       return res.status(400).json(error.parse('assignment-400', idNotFoundErrorMessage()))
-    }
-
-    //permission
-    const permissionErrors = validatePermission(req, db)
-    if (permissionErrors) {
-      return res.status(401).json(error.parse('assignment-401', generateUnauthorizedErrorMessage(permissionErrors)))
     }
 
     //try to delete
