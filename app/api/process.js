@@ -198,7 +198,7 @@ module.exports = app => {
     const coursesFilter = courses.map(x => ({ id: x.id, name: x.name })).sort(compareByName)
 
     //graduationLevels
-    const graduationLevels = await db.Course.findAll({ attributes: ['id', 'name'] })
+    const graduationLevels = await db.GraduationLevel.findAll({ attributes: ['id', 'name'] })
     const graduationLevelsFilter = graduationLevels.map(x => ({ id: x.id, name: x.name })).sort(compareByName)
 
     //assignments
