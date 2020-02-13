@@ -9,6 +9,8 @@ module.exports = app => {
     .post(authApi.authRequired, api.create)
     .get(api.list)
 
+  app.route(`${basePath}${route}/filters`).get(api.filters)
+
   app
     .route(`${basePath}${route}/:id`)
     .get(api.read)

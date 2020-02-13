@@ -182,5 +182,36 @@ module.exports = app => {
     }
   }
 
+  api.filters = async (req, res) => {
+    const compareByName = (a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
+      if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+      return 0
+    }
+
+    //years
+    const processes = await db.Process.findAll({ attributes: ['year'], distinct: true, where: { visible: true } })
+    const yearsFilter = [...new Set(processes.map(x => x.year))].map(x => ({ id: x, name: x }))
+
+    //courses
+    const courses = await db.Course.findAll({ attributes: ['id', 'name'] })
+    const coursesFilter = courses.map(x => ({ id: x.id, name: x.name })).sort(compareByName)
+
+    //graduationLevels
+    const graduationLevels = await db.Course.findAll({ attributes: ['id', 'name'] })
+    const graduationLevelsFilter = graduationLevels.map(x => ({ id: x.id, name: x.name })).sort(compareByName)
+
+    //assignments
+    const assignments = await db.Assignment.findAll({ attributes: ['id', 'name'] })
+    const assignmentsFilter = assignments.map(x => ({ id: x.id, name: x.name })).sort(compareByName)
+
+    res.status(201).json({
+      years: yearsFilter,
+      courses: coursesFilter,
+      graduationLevels: graduationLevelsFilter,
+      assignments: assignmentsFilter
+    })
+  }
+
   return api
 }
