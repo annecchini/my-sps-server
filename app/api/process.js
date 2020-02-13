@@ -191,7 +191,7 @@ module.exports = app => {
 
     //years
     const processes = await db.Process.findAll({ attributes: ['year'], distinct: true, where: { visible: true } })
-    const yearsFilter = [...new Set(processes.map(x => x.year))].map(x => ({ id: x, name: x }))
+    const yearsFilter = [...new Set(processes.map(x => x.year))].map(x => ({ id: x, name: x })).sort(compareByName)
 
     //courses
     const courses = await db.Course.findAll({ attributes: ['id', 'name'] })
