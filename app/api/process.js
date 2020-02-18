@@ -40,13 +40,22 @@ module.exports = app => {
 
     //Decidir como será whereCourseIds a partir dos filtros Course e GraduationLevel
     let whereCourseIds = {}
+    //Tenho filtros de curso e graduationLevel validos.
     if (CourseIds.length > 0 && CourseIdsFromGraduationLevelIds.length > 0) {
       const intersectionCourseIds = CourseIds.filter(id => CourseIdsFromGraduationLevelIds.includes(id))
       whereCourseIds = intersectionCourseIds.length > 0 ? { course_id: intersectionCourseIds } : { course_id: null }
-    } else if (CourseIds.length > 0) {
+    }
+    //Tenho apenas filtros de curso
+    else if (CourseIds.length > 0) {
       whereCourseIds = { course_id: CourseIds }
-    } else if (CourseIdsFromGraduationLevelIds.length > 0) {
+    }
+    //Tenho apenas filtros de graduationLevel
+    else if (CourseIdsFromGraduationLevelIds.length > 0) {
       whereCourseIds = { course_id: CourseIdsFromGraduationLevelIds }
+    }
+    //Especial: Tenho filtro de graduationLevel mas estes não tem cursos associados.
+    else if (validIds(req.query.graduationLevels).length > 0) {
+      whereCourseIds = { course_id: null }
     }
 
     //Definir que processos ocultos serão exibidos baseado no login.
@@ -183,7 +192,7 @@ module.exports = app => {
   }
 
   api.filters = async (req, res) => {
-    const compareByName = (a, b) => {
+    const compareByLabel = (a, b) => {
       if (a.label.toLowerCase() < b.label.toLowerCase()) return -1
       if (a.label.toLowerCase() > b.label.toLowerCase()) return 1
       return 0
@@ -191,19 +200,19 @@ module.exports = app => {
 
     //years
     const processes = await db.Process.findAll({ attributes: ['year'], distinct: true, where: { visible: true } })
-    const yearsFilter = [...new Set(processes.map(x => x.year))].map(x => ({ label: x, value: x })).sort(compareByName)
+    const yearsFilter = [...new Set(processes.map(x => x.year))].map(x => ({ label: x, value: x })).sort(compareByLabel)
 
     //courses
     const courses = await db.Course.findAll({ attributes: ['id', 'name'] })
-    const coursesFilter = courses.map(x => ({ label: x.name, value: x.id })).sort(compareByName)
+    const coursesFilter = courses.map(x => ({ label: x.name, value: x.id })).sort(compareByLabel)
 
     //graduationLevels
     const graduationLevels = await db.GraduationLevel.findAll({ attributes: ['id', 'name'] })
-    const graduationLevelsFilter = graduationLevels.map(x => ({ label: x.name, value: x.id })).sort(compareByName)
+    const graduationLevelsFilter = graduationLevels.map(x => ({ label: x.name, value: x.id })).sort(compareByLabel)
 
     //assignments
     const assignments = await db.Assignment.findAll({ attributes: ['id', 'name'] })
-    const assignmentsFilter = assignments.map(x => ({ label: x.name, value: x.id })).sort(compareByName)
+    const assignmentsFilter = assignments.map(x => ({ label: x.name, value: x.id })).sort(compareByLabel)
 
     res.status(201).json({
       years: yearsFilter,
