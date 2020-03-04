@@ -6,6 +6,7 @@ const {
   generateUnauthorizedErrorMessage
 } = require('../utils/error-helpers')
 const { validateBody, validatePermission } = require('../validation/processAssignment')
+const { validIds } = require('../utils/process-helpers')
 
 module.exports = app => {
   const db = app.db.models.index
@@ -13,7 +14,10 @@ module.exports = app => {
   const error = app.error.processAssignment
 
   api.list = (req, res) => {
-    db.ProcessAssignment.findAll({ order: [['createdAt', 'DESC']] }).then(
+    const processIds = req.query.process_ids ? validIds(req.query.process_ids) : []
+    const whereProcessIds = processIds.length > 0 ? { process_id: processIds } : {}
+
+    db.ProcessAssignment.findAll({ where: { ...whereProcessIds }, order: [['createdAt', 'DESC']] }).then(
       toList => {
         return res.json(toList)
       },
