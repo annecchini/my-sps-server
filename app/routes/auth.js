@@ -4,4 +4,6 @@ module.exports = app => {
   const { basePath } = require('../utils/express-helpers')
 
   app.route(`${basePath}${route}`).post(api.authenticate)
+
+  app.route(`${basePath}${route}/profile`).get(api.authRequired, api.readProfile)
 }

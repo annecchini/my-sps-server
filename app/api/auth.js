@@ -1,6 +1,7 @@
 'use strict'
 
 const jwt = require('jsonwebtoken')
+const { omit } = require('lodash')
 
 const jwtConf = require('../../config/jwt')
 const { generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../utils/error-helpers')
@@ -64,6 +65,15 @@ module.exports = app => {
     const user = await db.User.findOne({ where: { login: req.body.login } })
     let access_token = jwt.sign({ data: user.id }, jwtConf.jwt_secret, jwtConf.options)
     return res.json({ access_token, userMessage: 'Authentication success' })
+  }
+
+  api.readProfile = async (req, res) => {
+    //retrieve profile data
+    const user = omit(req.user.toJSON(), ['GlobalAdmins', 'UserRoles'])
+    const access = { isAdmin: isAdmin(req.user), UserRoles: req.user.UserRoles }
+
+    //send response
+    return res.json({ user, access })
   }
 
   api.authRequired = async (req, res, next) => {
