@@ -6,4 +6,6 @@ module.exports = app => {
   app.route(`${basePath}${route}`).post(api.authenticate)
 
   app.route(`${basePath}${route}/profile`).get(api.authRequired, api.readProfile)
+
+  app.route(`${basePath}${route}/profile/user`).put(api.authRequired, api.updateProfileUser)
 }

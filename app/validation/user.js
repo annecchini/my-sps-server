@@ -79,4 +79,4 @@ const validateDelete = async (user, models) => {
   return errors.length > 0 ? errors : null
 }
 
-module.exports = { validateBody, validateDelete }
+module.exports = { validateLogin, validatePassword, validateBody, validateDelete }

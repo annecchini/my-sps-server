@@ -1,5 +1,5 @@
 'use strict'
-
+const { validateLogin, validatePassword } = require('../validation/user')
 //##### Athenticate functions #####//
 
 const validateLoginAuth = async (value, db) => {
@@ -69,4 +69,20 @@ const validateAuthorizedAuth = async (login, db) => {
   }
 }
 
-module.exports = { validateBody, validateAuthorizedAuth }
+const validateBodyProfileUser = async (body, db, mode, item) => {
+  let errors = []
+
+  const loginError = await validateLogin(body.login, db, mode, item)
+  if (loginError) {
+    errors.push({ message: loginError, path: 'login' })
+  }
+
+  const passwordError = validatePassword(body.password, db, mode, item)
+  if (passwordError) {
+    errors.push({ message: passwordError, path: 'password' })
+  }
+
+  return errors.length > 0 ? errors : null
+}
+
+module.exports = { validateBody, validateAuthorizedAuth, validateBodyProfileUser }

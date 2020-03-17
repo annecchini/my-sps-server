@@ -5,7 +5,7 @@ const { omit } = require('lodash')
 
 const jwtConf = require('../../config/jwt')
 const { generateValidationErrorMessage, generateUnauthorizedErrorMessage } = require('../utils/error-helpers')
-const { validateBody, validateAuthorizedAuth } = require('../validation/auth')
+const { validateBody, validateAuthorizedAuth, validateBodyProfileUser } = require('../validation/auth')
 const { isAdmin, findPermission, havePermission } = require('../utils/permission-system-helpers')
 
 module.exports = app => {
@@ -74,6 +74,32 @@ module.exports = app => {
 
     //send response
     return res.json({ user, access })
+  }
+
+  api.updateProfileUser = async (req, res) => {
+    const toUpdate = await db.User.findByPk(req.user.id)
+
+    //verify valid id
+    if (!toUpdate) {
+      return res.status(400).json(error.parse('auth-400', idNotFoundErrorMessage()))
+    }
+
+    //validation
+    const errors = await validateBodyProfileUser(req.body, db, 'update', toUpdate)
+    if (errors) {
+      return res.status(400).json(error.parse('auth-400', generateValidationErrorMessage(errors)))
+    }
+
+    //remove authorized because user can't do that here
+    const fields = Object.keys(req.body).filter(key => key !== 'authorized')
+
+    //try to update
+    try {
+      const updated = await toUpdate.update(req.body, { fields: fields })
+      return res.json(updated)
+    } catch (e) {
+      return res.status(500).json(error.parse('auth-500', e))
+    }
   }
 
   api.authRequired = async (req, res, next) => {
