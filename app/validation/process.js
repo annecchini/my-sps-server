@@ -117,7 +117,8 @@ const validateBody = async (body, db, mode, item) => {
 
   const uniqueIdentifierYearError = await validateUniqueIdentifierYear(body, db, mode, item, identifierError, yearError)
   if (uniqueIdentifierYearError) {
-    errors.push({ message: uniqueIdentifierYearError, path: 'id' })
+    errors.push({ message: uniqueIdentifierYearError, path: 'identifier' })
+    errors.push({ message: uniqueIdentifierYearError, path: 'year' })
   }
 
   return errors.length > 0 ? errors : null
