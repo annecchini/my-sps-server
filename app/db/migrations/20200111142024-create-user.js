@@ -42,7 +42,7 @@ module.exports = {
       },
       {
         uniqueKeys: {
-          unique_name_isActive: {
+          unique_login_isActive: {
             fields: ['login', 'isActive']
           }
         }
