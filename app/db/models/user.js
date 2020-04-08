@@ -1,3 +1,5 @@
+/** @format */
+
 'use strict'
 
 const bcrypt = require('bcrypt')
@@ -31,18 +33,17 @@ module.exports = (sequelize, DataTypes) => {
     { paranoid: true, timestamps: true }
   )
 
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.GlobalAdmin, { foreignKey: 'user_id' })
     User.hasMany(models.UserRole, { foreignKey: 'user_id' })
   }
 
-  User.prototype.validPassword = async function(password) {
+  User.prototype.validPassword = async function (password) {
     return await bcrypt.compare(password, this.password)
   }
 
   User.beforeDestroy(async (user, _) => {
     //validação de restrições em modelos relacionados. (onDelete:'RESTRICT')
-    //vazio
     const errors = await validateDelete(user, sequelize.models)
     if (errors) {
       throw { name: 'ForbbidenDeletionError', traceback: 'User', errors: errors }
@@ -82,7 +83,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
-  User.prototype.toJSON = function() {
+  User.prototype.toJSON = function () {
     let values = Object.assign({}, this.get())
     delete values.password
     delete values.deletedAt
