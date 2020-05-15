@@ -1,3 +1,5 @@
+/** @format */
+
 'use strict'
 
 const validateUserId = async (value, db, mode, item) => {
@@ -63,8 +65,14 @@ const validateUniqueUserIdRoleIdCourseId = async (body, db, mode, item, userIdEr
     const whereRoleId = body.role_id ? { role_id: body.role_id } : { role_id: item.role_id }
 
     //Decidir se vai usar body.course_id ou item.course_id
-    const whereCourseId =
-      body.course_id || body.course_id === null ? { course_id: body.course_id } : { course_id: item.course_id }
+    let whereCourseId = {}
+    if (mode === 'create') {
+      whereCourseId = body.course_id ? { course_id: body.course_id } : null
+    }
+    if (mode === 'update') {
+      whereCourseId =
+        body.course_id || body.course_id === null ? { course_id: body.course_id } : { course_id: item.course_id }
+    }
 
     const userRoles = await db.UserRole.findAll({
       where: { ...whereUserId, ...whereRoleId, ...whereCourseId, ...whereIgnoreOwnId }
